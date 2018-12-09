@@ -22,6 +22,7 @@ public class GUI {
 
         container.add(setNorth(), BorderLayout.NORTH);
         container.add(setWest(), BorderLayout.WEST);
+        container.add(setCenter(), BorderLayout.CENTER);
         container.add(setSouth(), BorderLayout.SOUTH);
     }
 
@@ -30,7 +31,7 @@ public class GUI {
     //Setting up the North section
     private JPanel setNorth(){
         JPanel panel = new JPanel();
-        GridLayout grid = new GridLayout(2,10);
+        GridLayout grid = new GridLayout(2,3);
         panel.setLayout(grid);
 
         panel.add(new JTextArea("test"));
@@ -47,6 +48,17 @@ public class GUI {
         panel.add(new JLabel("test"));
         panel.add(new JLabel("test"));
         panel.add(new JLabel("test"));
+
+        return panel;
+    }
+
+    //Setting up the center section
+    private JPanel setCenter(){
+        JPanel panel = new JPanel();
+        GridLayout grid = new GridLayout(10,10);
+        panel.setLayout(grid);
+
+        panel.add(new JTextArea("testerdetesttest"));
 
         return panel;
     }
