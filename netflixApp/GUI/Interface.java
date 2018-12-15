@@ -7,12 +7,13 @@ import java.awt.*;
 
 public class Interface implements Runnable{
     private JFrame frame;
-
+    private int x = 1000;
+    private int y = 1000;
 
     @Override
     public void run() {
         frame = new JFrame("Netflix app");
-        frame.setPreferredSize(new Dimension(800,800));
+        frame.setPreferredSize(new Dimension(x,y));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -25,6 +26,14 @@ public class Interface implements Runnable{
 
     private void createElements(Container contentPane) {
         GUI ui = new GUI(contentPane);
-        contentPane = ui.getUi();
+        ui.getUi();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
