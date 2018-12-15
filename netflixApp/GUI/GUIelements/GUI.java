@@ -1,12 +1,13 @@
 package netflixApp.GUI.GUIelements;
 
-import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.GUIelements.sectors.centerSector;
 import netflixApp.GUI.Interface;
-import sun.font.FontManagerForSGE;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import java.awt.*;
 
@@ -26,7 +27,6 @@ public class GUI {
 
         container.add(setNorth(), BorderLayout.NORTH); //Top sector
         container.add(setWest(), BorderLayout.WEST); //Left sector
-        container.add(setEast(),BorderLayout.EAST);//Right sector
         container.add(setCenter(), BorderLayout.CENTER); //Center sector
         container.add(setSouth(), BorderLayout.SOUTH); //Bottom sector
     }
@@ -42,9 +42,15 @@ public class GUI {
 
         JTextPane textPane = new JTextPane();
         textPane.setBackground(Color.lightGray);
-        textPane.setPreferredSize(new Dimension(width.getX() - 50,80));
+        textPane.setPreferredSize(new Dimension(width.getX() - 40,80));
         textPane.setEditable(false);
-        textPane.setText("row 1 \n row 2\n row 3\n");
+
+        //Aligning text to middle of pane
+        alignToCenter(textPane);
+        textPane.setMargin(new Insets(20,0,0,0));
+
+        textPane.setText("Netflix Statistics");
+        textPane.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
 
         panel.add(textPane);
 
@@ -53,78 +59,85 @@ public class GUI {
 
     //Setting up the west section
     private JPanel setWest(){
+        //The wrapper wraps around the panel so that it will have some distance between the frame border and the panels border
+        JPanel wrapper = new JPanel();
+        wrapper.setBorder(new EmptyBorder(5,5,5,5));
+
         JPanel panel = new JPanel();
-        panel.setBorder(new EmptyBorder(5,10,5,5));
+        panel.setBorder(new EmptyBorder(5,5,5,5));
+
         panel.setBackground(Color.lightGray);
 
         GridLayout grid = new GridLayout(10,1,5,10);
         panel.setLayout(grid);
 
-        JButton firstBut = new JButton("test 1");
-        firstBut.setPreferredSize(new Dimension(200,10));
-        firstBut.setFont(new Font("Arial", Font.BOLD, 15));
-        firstBut.setBackground(Color.WHITE);
-        panel.add(firstBut);
 
-        JButton secondBut = new JButton("test 2");
-        secondBut.setPreferredSize(new Dimension(200,10));
-        secondBut.setFont(new Font("Arial", Font.BOLD, 15));
-        secondBut.setBackground(Color.WHITE);
-        panel.add(secondBut);
+        for (int i = 1; i <= 10; i++) {
+            panel.add(addAttributes(new JButton(randomWordGen(10))));
+        }
+        wrapper.add(panel);
 
-
-        return panel;
+        return wrapper;
     }
 
-    //Setting up the east section
-    private JPanel setEast(){
-        JPanel panel = new JPanel();
-        GridLayout grid = new GridLayout(1,1);
-        panel.setLayout(grid);
-
-        JLabel testLabel = new JLabel();
-        testLabel.setText("   ");
-
-        panel.add(testLabel);
-
-
-        return panel;
+    //Generates a random sequence of characters each time the method gets called and the parameter is the amount of characters
+    //Only for testing purposes
+    private String randomWordGen(int characters){
+        String alpha = "abcdefghijklmnopqrstuvwxyz";
+        String randomWord= "";
+        for (int i = 0; i < characters; i++) {
+            randomWord += alpha.charAt((int) (Math.random() * 25) + 1);
+        }
+        return randomWord;
     }
+
+    //All the attributes for the west sector button controls
+    private JButton addAttributes(JButton button){
+        button.setPreferredSize(new Dimension(200,50));
+        button.setFont(new Font("Arial", Font.BOLD, 15));
+        button.setBackground(Color.WHITE);
+        return button;
+    }
+
     //Setting up the center section
     private JPanel setCenter(){
         centerSector centerSector = new centerSector();
         return centerSector.getCenterSector();
     }
 
-    //Setting up the south section
+    //Setting up the south section (footer)
     private JPanel setSouth(){
+        JPanel wrapper = new JPanel();
+        //The wrapper wraps around the panel so that it will have some distance between the frame border and the panels border
+        wrapper.setBorder(new EmptyBorder(5,5,5,5));
+
         JPanel panel = new JPanel();
-        GridLayout grid = new GridLayout(2,8);
-        panel.setLayout(grid);
+        JTextPane txtPane = new JTextPane();
 
-        //Adding empty Panels to align the JButton
-        for (int x = 0; x < 2; x++) {
-            panel.add(new JPanel());
-        }
+        //Aligning text to center
+        alignToCenter(txtPane);
 
-        //A button
-        JButton testBut = new JButton();
-        Eventlisteners event = new Eventlisteners();
-        testBut.addActionListener(event);
-        testBut.setText("test button");
-        panel.add(testBut);
+        txtPane.setBackground(Color.lightGray);
+        txtPane.setEditable(false);
+        txtPane.setPreferredSize(new Dimension(width.getX() - 40,100));
 
-        //Adding empty Panels to align the JButton
-        for (int x = 0; x < 6; x++) {
-            panel.add(new JPanel());
-        }
+        //Setting up font type and size
+        txtPane.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        txtPane.setText("\nGemaakt door: Youri Bontekoe en Winson Ngoh");
 
-
+        panel.add(txtPane);
 
         return panel;
     }
 
+    private JTextPane alignToCenter(JTextPane pane){
+        StyledDocument doc = pane.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
+        return pane;
+    }
 
     //Returning the constructed layout to the interface class
     public Container getUi() {
