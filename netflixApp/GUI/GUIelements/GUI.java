@@ -72,7 +72,7 @@ public class GUI {
         panel.setLayout(grid);
 
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < 9; i++) {
             panel.add(addAttributes(new JButton(randomWordGen(10))));
         }
         wrapper.add(panel);
@@ -84,11 +84,12 @@ public class GUI {
     //Only for testing purposes
     private String randomWordGen(int characters){
         String alpha = "abcdefghijklmnopqrstuvwxyz";
-        String randomWord= "";
+        StringBuilder randomWord = new StringBuilder();
+
         for (int i = 0; i < characters; i++) {
-            randomWord += alpha.charAt((int) (Math.random() * 25) + 1);
+            randomWord.append(alpha.charAt((int) (Math.random() * 25) + 1));
         }
-        return randomWord;
+        return randomWord.toString();
     }
 
     //All the attributes for the west sector button controls

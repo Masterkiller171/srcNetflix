@@ -7,30 +7,29 @@ import javax.swing.*;
 import java.awt.*;
 
 public class centerSector {
+    private Interface getWidth = new Interface();
+
     public centerSector() {
     }
 
     public JPanel getCenterSector(){
         JPanel panel = new JPanel();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             panel.add(getBigText());
         }
 
-        GridLayout grid = new GridLayout(1,2,5,5);
+        GridLayout grid = new GridLayout(5,2,5,5);
         JPanel panol = new JPanel();
         panol.setLayout(grid);
 
-        JButton testerBut = new JButton();
-        testerBut.setText("teset but");
+        JComboBox comboBox = new JComboBox();
+        comboBox.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),50));
 
-        Eventlisteners event = new Eventlisteners();
-        testerBut.addActionListener(event);
-        panol.add(testerBut);
+        for (int i = 1; i <= 10; i++) {
+            comboBox.addItem("test " + i);
+        }
+        panol.add(comboBox);
 
-        JButton testerBut2 = new JButton();
-        testerBut2.setText("testbut 2");
-        testerBut2.addActionListener(event);
-        panol.add(testerBut2);
         panel.add(panol);
 
         return panel;
@@ -40,7 +39,7 @@ public class centerSector {
     private JPanel getBigText(){
         JPanel panel = new JPanel();
 
-        Interface getWidth = new Interface();
+
         JTextPane text = new JTextPane();
         text.setBackground(Color.lightGray);
         Insets insets = new Insets(5,20,5,5);
