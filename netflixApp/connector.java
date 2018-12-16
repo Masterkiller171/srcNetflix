@@ -10,7 +10,7 @@ public class connector {
     public Connection getCon() {
 
         //Database connectionURL
-        String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=Netflix;integratedSecurity=true;";
+        String connectionUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=Netflix;integratedSecurity=true;";
 
         Connection con = null;
         try {
