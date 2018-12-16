@@ -1,7 +1,6 @@
 package netflixApp.GUI;
 
 import netflixApp.GUI.GUIelements.GUI;
-import netflixApp.GUI.GUIelements.sectors.centerSector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +9,7 @@ public class Interface implements Runnable{
     private JFrame frame;
     private int x = 1000;
     private int y = 1000;
-    private int layoutType;
+
     @Override
     public void run() {
         frame = new JFrame("Netflix app");
@@ -25,22 +24,9 @@ public class Interface implements Runnable{
     }
 
 
-    public Container createElements(Container contentPane) {
-        if (layoutType <= 1) {
-            contentPane.removeAll();
-            GUI ui = new GUI(contentPane, 1);
-            return ui.getUi();
-        }else if (layoutType == 2){
-            contentPane.removeAll();
-            GUI ui = new GUI(contentPane, 2);
-            return ui.getUi();
-        }
-       // ui.getUi().removeAll();
-       throw  new IllegalArgumentException("Er is geen layoutType!");
-    }
-
-    public void setLayoutType(int layoutType) {
-        this.layoutType = layoutType;
+    private void createElements(Container contentPane) {
+        GUI ui = new GUI(contentPane);
+        ui.getUi();
     }
 
     public int getX() {

@@ -1,5 +1,6 @@
 package netflixApp.GUI.GUIelements.sectors;
 
+import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
@@ -12,9 +13,9 @@ public class centerSector {
     }
 
     public JPanel getCenterSector(){
-        JPanel panelCent = new JPanel();
+        JPanel panel = new JPanel();
         for (int i = 0; i < 2; i++) {
-            panelCent.add(getBigText());
+            panel.add(getBigText());
         }
 
         GridLayout grid = new GridLayout(5,2,5,5);
@@ -29,9 +30,9 @@ public class centerSector {
         }
         panol.add(comboBox);
 
-        panelCent.add(panol);
+        panel.add(panol);
 
-        return panelCent;
+        return panel;
     }
 
     //Creating textfield to explain content on page

@@ -1,6 +1,5 @@
 package netflixApp.GUI.GUIelements;
 
-import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.GUIelements.sectors.centerSector;
 import netflixApp.GUI.Interface;
 
@@ -15,24 +14,21 @@ import java.awt.*;
 public class GUI {
     private Container container;
     private Interface width = new Interface(); //Getting the width from the interface class to make the app more dynamic
-    private int layoutType;
 
-    public GUI(Container container, int layoutType) {
+
+    public GUI(Container container) {
         this.container = container;
-        this.layoutType = layoutType;
     }
 
     //Constructing the layout
-    private Container createLayout(int layoutType){
+    private void createLayout(){
         BorderLayout layout = new BorderLayout();
         container.setLayout(layout);
 
         container.add(setNorth(), BorderLayout.NORTH); //Top sector
         container.add(setWest(), BorderLayout.WEST); //Left sector
-        container.add(setCenter(layoutType), BorderLayout.CENTER); //Center sector
+        container.add(setCenter(), BorderLayout.CENTER); //Center sector
         container.add(setSouth(), BorderLayout.SOUTH); //Bottom sector
-
-        return container;
     }
 
 
@@ -75,17 +71,8 @@ public class GUI {
         GridLayout grid = new GridLayout(10,1,5,10);
         panel.setLayout(grid);
 
-        JButton clearPage = new JButton("reset page");
-        Eventlisteners e = new Eventlisteners(this.container);
-        clearPage.addActionListener(e);
-        panel.add(addAttributes(clearPage));
 
-        JButton returnPage = new JButton("return page");
-        Eventlisteners event = new Eventlisteners(this.container);
-        returnPage.addActionListener(event);
-        panel.add(addAttributes(returnPage));
-
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             panel.add(addAttributes(new JButton(randomWordGen(10))));
         }
         wrapper.add(panel);
@@ -114,22 +101,9 @@ public class GUI {
     }
 
     //Setting up the center section
-    private JPanel setCenter(int idPage){
+    private JPanel setCenter(){
         centerSector centerSector = new centerSector();
-        JPanel middlePanel = null;
-
-        switch (idPage){
-            case 1:
-            middlePanel = centerSector.getCenterSector();
-            middlePanel.setVisible(true);
-            break;
-
-            case 2:
-            middlePanel = centerSector.getCenterSector();
-            middlePanel.removeAll();
-            break;
-        }
-        return middlePanel;
+        return centerSector.getCenterSector();
     }
 
     //Setting up the south section (footer)
@@ -166,11 +140,11 @@ public class GUI {
         return pane;
     }
 
-
-
     //Returning the constructed layout to the interface class
     public Container getUi() {
-        return createLayout(layoutType);
+        createLayout();
+
+        return container;
     }
 
 }

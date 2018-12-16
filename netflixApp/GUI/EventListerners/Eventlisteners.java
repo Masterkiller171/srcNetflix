@@ -1,20 +1,9 @@
 package netflixApp.GUI.EventListerners;
 
-import netflixApp.GUI.GUIelements.GUI;
-import netflixApp.GUI.Interface;
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Eventlisteners implements ActionListener {
-    private Container cont;
-
-    public Eventlisteners(Container cont) {
-        this.cont = cont;
-    }
-
-    //Overloading the constructor so it doesn't need a parameter each time
     public Eventlisteners() {
     }
 
@@ -23,24 +12,16 @@ public class Eventlisteners implements ActionListener {
 
         //Checks for button names and assigning them to an action
         switch (e.getActionCommand()){
-            case "reset page":
-                resetPage();
+            case "teset but":
+                System.out.println("button 1");
                 break;
-            case "return page":
-                returnPage();
+            case "test button":
+                System.out.println("button 2");
+                break;
+            case "testbut 2":
+                System.out.println("testbut 2");
                 break;
         }
     }
 
-    private void resetPage(){
-        Interface ui = new Interface();
-        ui.setLayoutType(2);
-        ui.createElements(cont);
-    }
-
-    private void returnPage(){
-        Interface ui = new Interface();
-        ui.setLayoutType(1);
-        ui.createElements(cont);
-    }
 }
