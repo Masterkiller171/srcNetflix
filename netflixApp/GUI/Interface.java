@@ -1,7 +1,6 @@
 package netflixApp.GUI;
 
 import netflixApp.GUI.GUIelements.GUI;
-import netflixApp.GUI.GUIelements.sectors.centerSector;
 
 import javax.swing.*;
 import java.awt.*;

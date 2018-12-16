@@ -1,7 +1,7 @@
 package netflixApp.GUI.GUIelements;
 
 import netflixApp.GUI.EventListerners.Eventlisteners;
-import netflixApp.GUI.GUIelements.sectors.centerSector;
+import netflixApp.GUI.GUIelements.centerSector.mainPage;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
@@ -119,18 +119,20 @@ public class GUI {
 
     //Setting up the center section
     private JPanel setCenter(int idPage){
-        centerSector centerSector = new centerSector();
+        mainPage page = new mainPage();
         JPanel middlePanel = null;
 
         //Choosing the layout for the center borderLayout which is based on the parameter input
         switch (idPage){
             case 1:
-            middlePanel = centerSector.getCenterSector();
+            page.setUpExplainText("Here comes the information regarding the data shown below",190);
+            page.setUpdataShowText("Here comes the sql data", 190);
+            middlePanel = page.getCenterSector();
             middlePanel.setVisible(true);
             break;
 
             case 2:
-            middlePanel = centerSector.getCenterSector();
+            middlePanel = page.getCenterSector();
             middlePanel.removeAll();
             break;
         }
