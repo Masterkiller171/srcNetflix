@@ -11,6 +11,7 @@ public class centerSector {
     public centerSector() {
     }
 
+    //Constructing the whole center section into a Jpanel
     public JPanel getCenterSector(){
         JPanel panelCent = new JPanel();
         for (int i = 0; i < 2; i++) {

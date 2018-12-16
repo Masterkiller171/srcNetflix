@@ -22,7 +22,7 @@ public class GUI {
         this.layoutType = layoutType;
     }
 
-    //Constructing the layout
+    //Constructing the layout of the whole visible part of the application
     private Container createLayout(int layoutType){
         BorderLayout layout = new BorderLayout();
         container.setLayout(layout);
@@ -67,19 +67,23 @@ public class GUI {
         JPanel wrapper = new JPanel();
         wrapper.setBorder(new EmptyBorder(5,5,5,5));
 
+        //Main panel for all controls
         JPanel panel = new JPanel();
         panel.setBorder(new EmptyBorder(5,5,5,5));
 
         panel.setBackground(Color.lightGray);
 
+        //Grid layout so the buttons aligns vertically
         GridLayout grid = new GridLayout(10,1,5,10);
         panel.setLayout(grid);
 
+        //First dummy button to reset the page
         JButton clearPage = new JButton("reset page");
         Eventlisteners e = new Eventlisteners(this.container);
         clearPage.addActionListener(e);
         panel.add(addAttributes(clearPage));
 
+        //Second dummy button which returns the default center layout
         JButton returnPage = new JButton("return page");
         Eventlisteners event = new Eventlisteners(this.container);
         returnPage.addActionListener(event);
@@ -118,6 +122,7 @@ public class GUI {
         centerSector centerSector = new centerSector();
         JPanel middlePanel = null;
 
+        //Choosing the layout for the center borderLayout which is based on the parameter input
         switch (idPage){
             case 1:
             middlePanel = centerSector.getCenterSector();
@@ -157,6 +162,7 @@ public class GUI {
         return panel;
     }
 
+    //Aligns the object JtextPane to the center of the X-Axis of the frame
     private JTextPane alignToCenter(JTextPane pane){
         StyledDocument doc = pane.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -166,7 +172,9 @@ public class GUI {
         return pane;
     }
 
-
+    public int getLayoutType() {
+        return layoutType;
+    }
 
     //Returning the constructed layout to the interface class
     public Container getUi() {

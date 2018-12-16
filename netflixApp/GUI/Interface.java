@@ -10,6 +10,9 @@ public class Interface implements Runnable{
     private JFrame frame;
     private int x = 1000;
     private int y = 1000;
+
+    //The layoutType is a variable which contains the page id
+    //Default is 1 (main page)
     private int layoutType;
     @Override
     public void run() {
@@ -25,6 +28,7 @@ public class Interface implements Runnable{
     }
 
 
+    //Will determent which layoutType is chosen en adding the layout to the canvas
     public Container createElements(Container contentPane) {
         if (layoutType <= 1) {
             contentPane.removeAll();
@@ -35,19 +39,18 @@ public class Interface implements Runnable{
             GUI ui = new GUI(contentPane, 2);
             return ui.getUi();
         }
-       // ui.getUi().removeAll();
        throw  new IllegalArgumentException("Er is geen layoutType!");
     }
 
+    //Will set the layoutType so that it won't reset to 0 each frame
     public void setLayoutType(int layoutType) {
         this.layoutType = layoutType;
     }
 
+    //Getter for the x value of the frame so that the layout classes may take this value to calculate the max
+    //size of the frame
     public int getX() {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
 }

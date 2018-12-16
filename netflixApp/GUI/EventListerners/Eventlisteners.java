@@ -1,6 +1,5 @@
 package netflixApp.GUI.EventListerners;
 
-import netflixApp.GUI.GUIelements.GUI;
 import netflixApp.GUI.Interface;
 
 import java.awt.*;
@@ -10,6 +9,7 @@ import java.awt.event.ActionListener;
 public class Eventlisteners implements ActionListener {
     private Container cont;
 
+    //Constructor will receive the container object from the GUI class
     public Eventlisteners(Container cont) {
         this.cont = cont;
     }
@@ -20,8 +20,8 @@ public class Eventlisteners implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         //Checks for button names and assigning them to an action
+        //Only for the west sector buttons
         switch (e.getActionCommand()){
             case "reset page":
                 resetPage();
@@ -32,12 +32,14 @@ public class Eventlisteners implements ActionListener {
         }
     }
 
+    //Will choose the layoutType 2 which is currently an empty center canvas
     private void resetPage(){
         Interface ui = new Interface();
         ui.setLayoutType(2);
         ui.createElements(cont);
     }
 
+    //Will return the page to layoutType 1 which is the main page
     private void returnPage(){
         Interface ui = new Interface();
         ui.setLayoutType(1);
