@@ -1,5 +1,6 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
+import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
@@ -22,10 +23,10 @@ public class mainPage implements allPagesInterface{
     public JPanel getCenterSector(){
         JPanel panelCent = new JPanel();
 
-        panelCent.add(getBigText(this.explainTxt,this.height));
-        panelCent.add(getBigText(this.dataTxt,this.dataHeight));
+        panelCent.add(getInfoText());
+        panelCent.add(getDataText());
 
-        GridLayout grid = new GridLayout(5,2,5,5);
+        GridLayout grid = new GridLayout(15,1,5,5);
         JPanel panol = new JPanel();
         panol.setLayout(grid);
 
@@ -49,7 +50,7 @@ public class mainPage implements allPagesInterface{
     }
 
     //Creating textfield to explain content on page
-      private JPanel getBigText(String txt, int height){
+      private JPanel getInfoText(){
         JPanel panel = new JPanel();
 
         JTextPane text = new JTextPane();
@@ -57,12 +58,45 @@ public class mainPage implements allPagesInterface{
         Insets insets = new Insets(5,20,5,5);
 
         text.setMargin(insets);
-        text.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),height));
-        text.setText(txt);
+        text.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),this.height));
+        text.setText(this.explainTxt);
         text.setEditable(false);
         panel.add(text);
 
+       // panel.add(createTable(new JPanel()));
         return panel;
+    }
+
+    private int rows = 15;
+    //The tab for displaying the queried data from database
+    private JPanel getDataText(){
+        JPanel panel = new JPanel();
+        GridLayout table = new GridLayout(this.rows,1);
+        panel.setLayout(table);
+        panel = createTable(panel);
+        return panel;
+    }
+
+    //Create a table to show data base data in
+    private JPanel createTable(JPanel panel){
+        for (int i = 0; i < this.rows; i++) {
+            panel.add(createTableRow(new JTextPane(), i));
+        }
+        return panel;
+    }
+
+    //Adds attributes to each JTextpane object based on it's row index
+    private JTextPane createTableRow(JTextPane txt, int row){
+        txt.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),this.dataHeight / 10));
+        txt.setText(this.dataTxt);
+        txt.setEditable(false);
+
+        if (row % 2 == 1){
+            txt.setBackground(Color.white);
+        }else{
+            txt.setBackground(Color.lightGray);
+        }
+        return txt;
     }
 
     //Setting up the combobox buttons
