@@ -89,7 +89,7 @@ public class GUI {
         returnPage.addActionListener(event);
         panel.add(addAttributes(returnPage));
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             panel.add(addAttributes(new JButton(randomWordGen(10))));
         }
         wrapper.add(panel);
@@ -100,11 +100,16 @@ public class GUI {
     //Generates a random sequence of characters each time the method gets called and the parameter is the amount of characters
     //Only for testing purposes
     private String randomWordGen(int characters){
-        String alpha = "abcdefghijklmnopqrstuvwxyz";
+        String alpha = "abcdefghijklmnopqrstuvwxyz, ";
         StringBuilder randomWord = new StringBuilder();
 
         for (int i = 0; i < characters; i++) {
-            randomWord.append(alpha.charAt((int) (Math.random() * 25) + 1));
+            int rando = (int) (Math.random() * 27) + 1;
+            if (alpha.charAt(rando) == ','){
+                randomWord.append(alpha.charAt(rando) + " ");
+            }else{
+                randomWord.append(alpha.charAt(rando));
+            }
         }
         return randomWord.toString();
     }
@@ -125,8 +130,8 @@ public class GUI {
         //Choosing the layout for the center borderLayout which is based on the parameter input
         switch (idPage){
             case 1:
-            page.setUpExplainText("Here comes the information regarding the data shown below",190);
-            page.setUpdataShowText("Here comes the sql data", 190);
+            page.setUpExplainText("Here comes the information regarding the data shown below\n\n" + randomWordGen(200),190);
+            page.setUpdataShowText("Here comes the sql data ", 190);
             middlePanel = page.getCenterSector();
             middlePanel.setVisible(true);
             break;

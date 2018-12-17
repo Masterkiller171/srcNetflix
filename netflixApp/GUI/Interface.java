@@ -7,22 +7,21 @@ import java.awt.*;
 
 public class Interface implements Runnable{
     private JFrame frame;
-    private int x = 1000;
-    private int y = 1000;
+    private int x = Toolkit.getDefaultToolkit().getScreenSize().width; //Getting the horizontal screen size
 
     //The layoutType is a variable which contains the page id
     //Default is 1 (main page)
     private int layoutType;
     @Override
     public void run() {
-        frame = new JFrame("Netflix app");
-        frame.setPreferredSize(new Dimension(x,y));
+        frame = new JFrame("Netflix app -Youri Bontekoe en Winson Ngoh");
+        //frame.setPreferredSize(new Dimension(x,y));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //frame.setUndecorated(true);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         createElements(frame.getContentPane());
 
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -38,6 +37,7 @@ public class Interface implements Runnable{
             GUI ui = new GUI(contentPane, 2);
             return ui.getUi();
         }
+        //When there is no valid layoutType it will throw this Exception
        throw  new IllegalArgumentException("Er is geen layoutType!");
     }
 
