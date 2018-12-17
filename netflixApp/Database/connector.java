@@ -1,4 +1,4 @@
-package netflixApp;
+package netflixApp.Database;
 
 import java.sql.*;
 

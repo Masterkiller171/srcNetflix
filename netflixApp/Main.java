@@ -1,5 +1,6 @@
 package netflixApp;
 
+import netflixApp.Database.connector;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;

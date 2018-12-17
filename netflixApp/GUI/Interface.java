@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Interface implements Runnable{
     private JFrame frame;
-    private int x = Toolkit.getDefaultToolkit().getScreenSize().width; //Getting the horizontal screen size
+    private final int x = Toolkit.getDefaultToolkit().getScreenSize().width; //Getting the horizontal screen size
 
     //The layoutType is a variable which contains the page id
     //Default is 1 (main page)
@@ -22,6 +22,7 @@ public class Interface implements Runnable{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createElements(frame.getContentPane());
 
+        frame.pack();
         frame.setVisible(true);
     }
 
