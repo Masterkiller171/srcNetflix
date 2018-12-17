@@ -1,6 +1,7 @@
 package netflixApp.GUI;
 
 import netflixApp.GUI.GUIelements.GUI;
+import netflixApp.GUI.GUIelements.Layout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class Interface implements Runnable{
 
     //The layoutType is a variable which contains the page id
     //Default is 1 (main page)
-    private int layoutType;
+    private Layout layoutType;
     @Override
     public void run() {
         frame = new JFrame("Netflix app -Youri Bontekoe en Winson Ngoh");
@@ -29,21 +30,23 @@ public class Interface implements Runnable{
 
     //Will determent which layoutType is chosen en adding the layout to the canvas
     public Container createElements(Container contentPane) {
-        if (layoutType <= 1) {
-            contentPane.removeAll();
-            GUI ui = new GUI(contentPane, 1);
-            return ui.getUi();
-        }else if (layoutType == 2){
-            contentPane.removeAll();
-            GUI ui = new GUI(contentPane, 2);
-            return ui.getUi();
-        }
+            switch (this.layoutType) {
+                case MAIN:
+                    contentPane.removeAll();
+                    GUI ui = new GUI(contentPane, Layout.MAIN);
+                    return ui.getUi();
+
+                case RESET:
+                    contentPane.removeAll();
+                    ui = new GUI(contentPane, Layout.RESET);
+                    return ui.getUi();
+            }
         //When there is no valid layoutType it will throw this Exception
        throw  new IllegalArgumentException("Er is geen layoutType!");
     }
 
     //Will set the layoutType so that it won't reset to 0 each frame
-    public void setLayoutType(int layoutType) {
+    public void setLayoutType(Layout layoutType) {
         this.layoutType = layoutType;
     }
 

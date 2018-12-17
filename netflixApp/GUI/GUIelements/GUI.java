@@ -15,15 +15,15 @@ import java.awt.*;
 public class GUI {
     private Container container;
     private Interface width = new Interface(); //Getting the width from the interface class to make the app more dynamic
-    private int layoutType;
+    private Layout layoutType;
 
-    public GUI(Container container, int layoutType) {
+    public GUI(Container container, Layout layoutType) {
         this.container = container;
         this.layoutType = layoutType;
     }
 
     //Constructing the layout of the whole visible part of the application
-    private Container createLayout(int layoutType){
+    private Container createLayout(Layout layoutType){
         BorderLayout layout = new BorderLayout();
         container.setLayout(layout);
 
@@ -123,20 +123,20 @@ public class GUI {
     }
 
     //Setting up the center section
-    private JPanel setCenter(int idPage){
+    private JPanel setCenter(Layout lay){
         mainPage page = new mainPage();
         JPanel middlePanel = null;
 
         //Choosing the layout for the center borderLayout which is based on the parameter input
-        switch (idPage){
-            case 1:
+        switch (lay){
+            case MAIN:
             page.setUpExplainText("Here comes the information regarding the data shown below\n\n" + randomWordGen(200),190);
             page.setUpdataShowText("Here comes the sql data ", 190);
             middlePanel = page.getCenterSector();
             middlePanel.setVisible(true);
             break;
 
-            case 2:
+            case RESET:
             middlePanel = page.getCenterSector();
             middlePanel.removeAll();
             break;
@@ -179,7 +179,7 @@ public class GUI {
         return pane;
     }
 
-    public int getLayoutType() {
+    public Layout getLayoutType() {
         return layoutType;
     }
 

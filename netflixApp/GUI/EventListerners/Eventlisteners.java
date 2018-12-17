@@ -1,5 +1,6 @@
 package netflixApp.GUI.EventListerners;
 
+import netflixApp.GUI.GUIelements.Layout;
 import netflixApp.GUI.Interface;
 
 import java.awt.*;
@@ -35,14 +36,14 @@ public class Eventlisteners implements ActionListener {
     //Will choose the layoutType 2 which is currently an empty center canvas
     private void resetPage(){
         Interface ui = new Interface();
-        ui.setLayoutType(2);
+        ui.setLayoutType(Layout.RESET);
         ui.createElements(cont);
     }
 
     //Will return the page to layoutType 1 which is the main page
     private void returnPage(){
         Interface ui = new Interface();
-        ui.setLayoutType(1);
+        ui.setLayoutType(Layout.MAIN);
         ui.createElements(cont);
     }
 }
