@@ -1,6 +1,5 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
-import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
@@ -20,6 +19,7 @@ public class mainPage implements allPagesInterface{
     }
 
     //Constructing the whole center section into a Jpanel
+    @Override
     public JPanel getCenterSector(){
         JPanel panelCent = new JPanel();
 
@@ -38,12 +38,14 @@ public class mainPage implements allPagesInterface{
     }
 
     //Setting up all the text attributes
+    @Override
     public void setUpExplainText(String text, int height){
         this.explainTxt = text;
         this.height = height;
     }
 
     //Setting up all the data show text
+    @Override
     public void setUpdataShowText(String data, int height){
         this.dataTxt = data;
         this.dataHeight = height;

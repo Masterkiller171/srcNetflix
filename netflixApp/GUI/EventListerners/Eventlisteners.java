@@ -27,8 +27,11 @@ public class Eventlisteners implements ActionListener {
             case "reset page":
                 resetPage();
                 break;
-            case "return page":
+            case "return home":
                 returnPage();
+                break;
+            case "pie charts":
+                pieCharts();
                 break;
         }
     }
@@ -44,6 +47,12 @@ public class Eventlisteners implements ActionListener {
     private void returnPage(){
         Interface ui = new Interface();
         ui.setLayoutType(Layout.MAIN);
+        ui.createElements(cont);
+    }
+
+    private void pieCharts(){
+        Interface ui = new Interface();
+        ui.setLayoutType(Layout.PIECHART);
         ui.createElements(cont);
     }
 }

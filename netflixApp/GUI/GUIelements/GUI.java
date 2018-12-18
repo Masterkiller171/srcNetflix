@@ -2,6 +2,7 @@ package netflixApp.GUI.GUIelements;
 
 import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.GUIelements.centerSector.mainPage;
+import netflixApp.GUI.GUIelements.centerSector.piechart;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
@@ -77,19 +78,25 @@ public class GUI {
         GridLayout grid = new GridLayout(10,1,5,10);
         panel.setLayout(grid);
 
-        //First dummy button to reset the page
+        //First dummy button which returns the default center layout
+        JButton returnPage = new JButton("return home");
+        Eventlisteners event = new Eventlisteners(this.container);
+        returnPage.addActionListener(event);
+        panel.add(addAttributes(returnPage));
+
+        //Second dummy button to reset the page
         JButton clearPage = new JButton("reset page");
         Eventlisteners e = new Eventlisteners(this.container);
         clearPage.addActionListener(e);
         panel.add(addAttributes(clearPage));
 
         //Second dummy button which returns the default center layout
-        JButton returnPage = new JButton("return page");
-        Eventlisteners event = new Eventlisteners(this.container);
-        returnPage.addActionListener(event);
-        panel.add(addAttributes(returnPage));
+        JButton piePage = new JButton("pie charts");
+        Eventlisteners pieEvent = new Eventlisteners(this.container);
+        piePage.addActionListener(pieEvent);
+        panel.add(addAttributes(piePage));
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             panel.add(addAttributes(new JButton(randomWordGen(10))));
         }
         wrapper.add(panel);
@@ -139,6 +146,13 @@ public class GUI {
             case RESET:
             middlePanel = page.getCenterSector();
             middlePanel.removeAll();
+            break;
+
+            case PIECHART:
+            piechart piechart = new piechart();
+            piechart.setUpExplainText("Dit is een pie chart (.)(.)", 190);
+            middlePanel = piechart.getCenterSector();
+            middlePanel.setVisible(true);
             break;
         }
         return middlePanel;

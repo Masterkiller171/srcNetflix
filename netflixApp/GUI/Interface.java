@@ -2,6 +2,7 @@ package netflixApp.GUI;
 
 import netflixApp.GUI.GUIelements.GUI;
 import netflixApp.GUI.GUIelements.Layout;
+import netflixApp.GUI.GUIelements.centerSector.createPieChart;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +41,11 @@ public class Interface implements Runnable{
                     contentPane.removeAll();
                     ui = new GUI(contentPane, Layout.RESET);
                     return ui.getUi();
+
+                case PIECHART:
+                   contentPane.removeAll();
+                   ui = new GUI(contentPane, Layout.PIECHART);
+                   return ui.getUi();
             }
         //When there is no valid layoutType it will throw this Exception
        throw  new IllegalArgumentException("Er is geen layoutType!");
