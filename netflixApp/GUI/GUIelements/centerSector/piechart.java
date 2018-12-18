@@ -23,6 +23,7 @@ public class piechart implements allPagesInterface {
         setPieValues();
     }
 
+    //Generated the piechart Jpanel
     @Override
     public JPanel getCenterSector() {
         JPanel panel = new JPanel();
@@ -35,12 +36,14 @@ public class piechart implements allPagesInterface {
         return panel;
     }
 
+    //Sets up text for piechart (explaintext)
     @Override
     public void setUpExplainText(String text, int height) {
         this.explainHeight = height;
         this.explainText = text;
     }
 
+    //Sets up text for piechart (data)
     @Override
     public void setUpdataShowText(String data, int height) {
         this.dataText = data;
@@ -64,12 +67,14 @@ public class piechart implements allPagesInterface {
         return panel;
     }
 
+    //Sets the piechart values (currently it's random but this can be changed to a normal array)
     public void setPieValues(/*ArrayList<Integer> pieValues*/) {
         for (int i = 0; i < 20; i++) {
             this.pieValues.add((int)(Math.random() * 1000) + 1);
         }
     }
 
+    //Getter for the createpiechart class
     public ArrayList<Integer> getPieValues(){
         return this.pieValues;
     }
