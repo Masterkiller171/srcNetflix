@@ -1,11 +1,12 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
-import javafx.scene.chart.PieChart;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class piechart implements allPagesInterface {
     private String explainText;
@@ -14,12 +15,14 @@ public class piechart implements allPagesInterface {
     private int dataHeight;
 
     private ArrayList<Integer> pieValues;
-
+    private Map<Integer, Color> colourAndPos;
     private int width = new Interface().getX();
+
     public piechart() {
         this.explainHeight = 190;
         this.explainText = "blank page";
         pieValues = new ArrayList<>();
+        colourAndPos = new HashMap<>();
         setPieValues();
     }
 
@@ -30,9 +33,8 @@ public class piechart implements allPagesInterface {
         GridLayout grid = new GridLayout(3,1);
         panel.setLayout(grid);
 
-        createPieChart pieChart = new createPieChart();
         panel.add(getInfoText());
-        panel.add(pieChart);
+        panel.add(createLegend());
         return panel;
     }
 
@@ -67,16 +69,70 @@ public class piechart implements allPagesInterface {
         return panel;
     }
 
+    private JPanel createLegend(){
+        JPanel panel = new JPanel();
+        createPieChart pie = new createPieChart();
+        GridLayout grid = new GridLayout(1,2);
+        panel.setLayout(grid);
+
+        JPanel legend = new JPanel();
+        GridLayout gridL = new GridLayout(10,6);
+        legend.setLayout(gridL);
+
+        for (int i = 0; i < colourAndPos.size(); i++) {
+            for (int j = 0; j < 5; j++) {
+                legend.add(new JLabel());
+            }
+                JTextPane newLb = new JTextPane();
+                newLb.setBackground(colourAndPos.get(i));
+                newLb.setText(i + 1 + "");
+                legend.add(newLb);
+        }
+
+        panel.add(legend);
+        panel.add(pie);
+
+
+        return panel;
+    }
+
     //Sets the piechart values (currently it's random but this can be changed to a normal array)
-    public void setPieValues(/*ArrayList<Integer> pieValues*/) {
-        for (int i = 0; i < 20; i++) {
+    void setPieValues(/*ArrayList<Integer> pieValues*/) {
+        int pos = 0;
+        for (int i = 0; i < 10; i++) {
             this.pieValues.add((int)(Math.random() * 1000) + 1);
+
+            colourAndPos.put(pos, getColour(pos));
+            pos++;
         }
     }
 
+    //Generating a new colour for each chart (16.7 million possibilities)
+    private Color getColour(int pos){
+        Color colour = null;
+        switch (pos){
+            case 0: colour = Color.blue; break;
+            case 1: colour = Color.red; break;
+            case 2: colour = new Color(128,0,128); break;
+            case 3: colour = Color.GREEN; break;
+            case 4: colour = Color.PINK; break;
+            case 5: colour = Color.BLACK; break;
+            case 6: colour = Color.ORANGE; break;
+            case 7: colour = Color.YELLOW; break;
+            case 8: colour = Color.CYAN; break;
+            case 9: colour = new Color(192,192,192); break;
+        }
+        return colour;
+    }
+
+    Map<Integer, Color> getColourAndPos() {
+        return this.colourAndPos;
+    }
+
     //Getter for the createpiechart class
-    public ArrayList<Integer> getPieValues(){
+    ArrayList<Integer> getPieValues(){
         return this.pieValues;
     }
+
 }
 
