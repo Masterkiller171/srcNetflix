@@ -39,7 +39,7 @@ public class Eventlisteners implements ActionListener {
     //Will choose the layoutType 2 which is currently an empty center canvas
     private void resetPage(){
         Interface ui = new Interface();
-        ui.setLayoutType(Layout.RESET);
+        ui.setLayoutType(Layout.REMOVEACC);
         ui.createElements(cont);
     }
 

@@ -37,9 +37,9 @@ public class Interface implements Runnable{
                     GUI ui = new GUI(contentPane, Layout.MAIN);
                     return ui.getUi();
 
-                case RESET:
+                case REMOVEACC:
                     contentPane.removeAll();
-                    ui = new GUI(contentPane, Layout.RESET);
+                    ui = new GUI(contentPane, Layout.REMOVEACC);
                     return ui.getUi();
 
                 case PIECHART:

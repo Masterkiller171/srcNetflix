@@ -96,9 +96,6 @@ public class GUI {
         piePage.addActionListener(pieEvent);
         panel.add(addAttributes(piePage));
 
-        for (int i = 0; i < 6; i++) {
-            panel.add(addAttributes(new JButton(randomWordGen(10))));
-        }
         wrapper.add(panel);
 
         return wrapper;
@@ -143,7 +140,7 @@ public class GUI {
             middlePanel.setVisible(true);
             break;
 
-            case RESET:
+            case REMOVEACC:
             middlePanel = page.getCenterSector();
             middlePanel.removeAll();
             break;
