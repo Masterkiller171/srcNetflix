@@ -44,7 +44,7 @@ public class newAccount implements allPagesInterface{
 
     }
 
-    private JPanel getInfoText(){
+    public JPanel getInfoText(){
         JPanel panel = new JPanel();
 
         JTextPane text = new JTextPane();

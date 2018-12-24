@@ -4,6 +4,7 @@ import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.GUIelements.centerSector.mainPage;
 import netflixApp.GUI.GUIelements.centerSector.newAccount;
 import netflixApp.GUI.GUIelements.centerSector.piechart;
+import netflixApp.GUI.GUIelements.centerSector.removeAccount;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
@@ -80,13 +81,13 @@ public class GUI {
         panel.setLayout(grid);
 
         //First dummy button which returns the default center layout
-        JButton returnPage = new JButton("return home");
+        JButton returnPage = new JButton("Home");
         Eventlisteners event = new Eventlisteners(this.container);
         returnPage.addActionListener(event);
         panel.add(addAttributes(returnPage));
 
         //Second dummy button to reset the page
-        JButton clearPage = new JButton("reset page");
+        JButton clearPage = new JButton("Remove Account");
         Eventlisteners e = new Eventlisteners(this.container);
         clearPage.addActionListener(e);
         panel.add(addAttributes(clearPage));
@@ -153,8 +154,9 @@ public class GUI {
             break;
 
             case REMOVEACC:
-            middlePanel = page.getCenterSector();
-            middlePanel.removeAll();
+            removeAccount acc = new removeAccount();
+            middlePanel = acc.getCenterSector();
+            middlePanel.setVisible(true);
             break;
 
             case PIECHART:

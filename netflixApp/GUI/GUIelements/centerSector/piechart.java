@@ -54,7 +54,7 @@ public class piechart implements allPagesInterface {
     }
 
     //Creating textfield to explain content on page
-    private JPanel getInfoText(){
+    public JPanel getInfoText(){
         JPanel panel = new JPanel();
         JTextPane text = new JTextPane();
         text.setBackground(Color.lightGray);

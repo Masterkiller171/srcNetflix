@@ -24,10 +24,10 @@ public class Eventlisteners implements ActionListener {
         //Checks for button names and assigning them to an action
         //Only for the west sector buttons
         switch (e.getActionCommand()){
-            case "reset page":
+            case "Remove Account":
                 resetPage();
                 break;
-            case "return home":
+            case "Home":
                 returnPage();
                 break;
             case "pie charts":
