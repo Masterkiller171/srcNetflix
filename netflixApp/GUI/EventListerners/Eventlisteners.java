@@ -33,7 +33,16 @@ public class Eventlisteners implements ActionListener {
             case "pie charts":
                 pieCharts();
                 break;
+            case "create new account":
+                newAcc();
+                break;
         }
+    }
+
+    private void newAcc() {
+        Interface ui = new Interface();
+        ui.setLayoutType(Layout.NEWACCOUNT);
+        ui.createElements(cont);
     }
 
     //Will choose the layoutType 2 which is currently an empty center canvas

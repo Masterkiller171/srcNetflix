@@ -2,6 +2,7 @@ package netflixApp.GUI.GUIelements;
 
 import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.GUIelements.centerSector.mainPage;
+import netflixApp.GUI.GUIelements.centerSector.newAccount;
 import netflixApp.GUI.GUIelements.centerSector.piechart;
 import netflixApp.GUI.Interface;
 
@@ -75,7 +76,7 @@ public class GUI {
         panel.setBackground(Color.lightGray);
 
         //Grid layout so the buttons aligns vertically
-        GridLayout grid = new GridLayout(10,1,5,10);
+        GridLayout grid = new GridLayout(4,1,5,10);
         panel.setLayout(grid);
 
         //First dummy button which returns the default center layout
@@ -96,6 +97,18 @@ public class GUI {
         piePage.addActionListener(pieEvent);
         panel.add(addAttributes(piePage));
 
+<<<<<<< HEAD
+=======
+        //Second dummy button which returns the default center layout
+        JButton newAcc = new JButton("create new account");
+        Eventlisteners accEvent = new Eventlisteners(this.container);
+        newAcc.addActionListener(accEvent);
+        panel.add(addAttributes(newAcc));
+
+//        for (int i = 0; i < 6; i++) {
+//            panel.add(addAttributes(new JButton(randomWordGen(10))));
+//        }
+>>>>>>> 244730b8709ce9453c8acda13138be51a1e02475
         wrapper.add(panel);
 
         return wrapper;
@@ -147,10 +160,17 @@ public class GUI {
 
             case PIECHART:
             piechart piechart = new piechart();
-            piechart.setUpExplainText("Dit is een pie chart (.)(.)", 190);
+            piechart.setUpExplainText(randomWordGen(200), 190);
             middlePanel = piechart.getCenterSector();
             middlePanel.setVisible(true);
             break;
+
+            case NEWACCOUNT:
+                newAccount newacc = new newAccount();
+                newacc.setUpExplainText(randomWordGen(300),40);
+                middlePanel = newacc.getCenterSector();
+                middlePanel.setVisible(true);
+                break;
         }
         return middlePanel;
     }

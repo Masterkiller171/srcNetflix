@@ -15,13 +15,12 @@ public class createPieChart extends JPanel{
         @Override
         public void paintComponent(Graphics g){
             Graphics2D g2 = (Graphics2D) g;
-
             //Creating the circle for the pie chart
             Arc2D.Float arc = new Arc2D.Float(Arc2D.PIE);
 
             //Getting the screen size to align the piechart
-            int frameW = Toolkit.getDefaultToolkit().getScreenSize().width;
-            arc.setFrame((int)(frameW / 30),0,250,250);
+            final int frameW = Toolkit.getDefaultToolkit().getScreenSize().width;
+            arc.setFrame((int)(frameW / 30),0,180,180);
 
             //The sum of all piechart values
             double sumOfPieVals = 0;
@@ -33,7 +32,7 @@ public class createPieChart extends JPanel{
 
             //Constructing the pie chart
             for (int i = 0; i < colours.size(); i++) {
-                double calculate = pieVals.get(i) / sumOfPieVals * 360; //Calculating the thickness of the chart
+                double calculate = (pieVals.get(i) / sumOfPieVals) * 360; //Calculating the thickness of the chart
                     arc.setAngleStart(holdStartAngle); //The starting position of a chart
                     arc.setAngleExtent(calculate);  //The end of an chart
 
@@ -44,6 +43,5 @@ public class createPieChart extends JPanel{
 
                     holdStartAngle += calculate;    //Repositioning the starters degrees of the next chart
             }
-
         }
 }
