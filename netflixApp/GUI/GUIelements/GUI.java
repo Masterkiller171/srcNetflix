@@ -97,8 +97,7 @@ public class GUI {
         piePage.addActionListener(pieEvent);
         panel.add(addAttributes(piePage));
 
-<<<<<<< HEAD
-=======
+
         //Second dummy button which returns the default center layout
         JButton newAcc = new JButton("create new account");
         Eventlisteners accEvent = new Eventlisteners(this.container);
@@ -108,7 +107,7 @@ public class GUI {
 //        for (int i = 0; i < 6; i++) {
 //            panel.add(addAttributes(new JButton(randomWordGen(10))));
 //        }
->>>>>>> 244730b8709ce9453c8acda13138be51a1e02475
+
         wrapper.add(panel);
 
         return wrapper;
