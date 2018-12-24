@@ -30,22 +30,27 @@ public class Interface implements Runnable{
 
 
     //Will determent which layoutType is chosen en adding the layout to the canvas
-    public Container createElements(Container contentPane) {
+    public Container createElements(Container container) {
             switch (this.layoutType) {
                 case MAIN:
-                    contentPane.removeAll();
-                    GUI ui = new GUI(contentPane, Layout.MAIN);
+                    container.removeAll();
+                    GUI ui = new GUI(container, Layout.MAIN);
                     return ui.getUi();
 
                 case RESET:
-                    contentPane.removeAll();
-                    ui = new GUI(contentPane, Layout.RESET);
+                    container.removeAll();
+                    ui = new GUI(container, Layout.RESET);
                     return ui.getUi();
 
                 case PIECHART:
-                   contentPane.removeAll();
-                   ui = new GUI(contentPane, Layout.PIECHART);
+                   container.removeAll();
+                   ui = new GUI(container, Layout.PIECHART);
                    return ui.getUi();
+
+                case NEWACCOUNT:
+                    container.removeAll();
+                    ui = new GUI(container,Layout.NEWACCOUNT);
+                    return ui.getUi();
             }
         //When there is no valid layoutType it will throw this Exception
        throw  new IllegalArgumentException("Er is geen layoutType!");

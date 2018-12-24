@@ -35,6 +35,7 @@ public class piechart implements allPagesInterface {
 
         panel.add(getInfoText());
         panel.add(createLegend());
+
         return panel;
     }
 
@@ -57,7 +58,7 @@ public class piechart implements allPagesInterface {
         JPanel panel = new JPanel();
         JTextPane text = new JTextPane();
         text.setBackground(Color.lightGray);
-        Insets insets = new Insets(5,20,5,5);
+        Insets insets = new Insets(5,20,5,5); //Wrapper for text HTML style
 
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(width / 1.5),this.explainHeight));
@@ -79,35 +80,35 @@ public class piechart implements allPagesInterface {
         GridLayout gridL = new GridLayout(10,6);
         legend.setLayout(gridL);
 
-        for (int i = 0; i < colourAndPos.size(); i++) {
+        for (int i = 0; i < this.pieValues.size(); i++) {
             for (int j = 0; j < 5; j++) {
                 legend.add(new JLabel());
             }
+
                 JTextPane newLb = new JTextPane();
+                newLb.setEditable(false);
                 newLb.setBackground(colourAndPos.get(i));
-                newLb.setText(i + 1 + "");
+                newLb.setText(i + 1 + ".  " + this.pieValues.get(i));
                 legend.add(newLb);
         }
 
         panel.add(legend);
         panel.add(pie);
 
-
         return panel;
     }
 
     //Sets the piechart values (currently it's random but this can be changed to a normal array)
-    void setPieValues(/*ArrayList<Integer> pieValues*/) {
+   public void setPieValues(/*ArrayList<Integer> pieValues*/) {
         int pos = 0;
-        for (int i = 0; i < 10; i++) {
-            this.pieValues.add((int)(Math.random() * 1000) + 1);
-
+        for (int i = 0; i < 100; i++) {
+            this.pieValues.add((i + 1) * 22);
             colourAndPos.put(pos, getColour(pos));
             pos++;
         }
     }
 
-    //Generating a new colour for each chart (16.7 million possibilities)
+    //Generating a new colour for each chart 10 possibilities
     private Color getColour(int pos){
         Color colour = null;
         switch (pos){
@@ -117,11 +118,16 @@ public class piechart implements allPagesInterface {
             case 3: colour = Color.GREEN; break;
             case 4: colour = Color.PINK; break;
             case 5: colour = Color.BLACK; break;
-            case 6: colour = Color.ORANGE; break;
+            case 6: colour = Color.MAGENTA; break;
             case 7: colour = Color.YELLOW; break;
             case 8: colour = Color.CYAN; break;
             case 9: colour = new Color(192,192,192); break;
         }
+
+        if (pos >= 10){
+            colour = new Color((int) (Math.random() * 255) + 1,(int) (Math.random() * 255) + 1,(int) (Math.random() * 255) + 1);
+        }
+
         return colour;
     }
 
