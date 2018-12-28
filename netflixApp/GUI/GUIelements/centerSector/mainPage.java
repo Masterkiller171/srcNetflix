@@ -1,9 +1,14 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
+import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class mainPage implements allPagesInterface{
     private Interface getWidth = new Interface();
@@ -101,14 +106,32 @@ public class mainPage implements allPagesInterface{
         return txt;
     }
 
+    private Object holdLastClicked;
+    private Eventlisteners events;
+
     //Setting up the combobox buttons
     private JComboBox getCombuButs(){
         JComboBox comboBox = new JComboBox();
+        events = new Eventlisteners();
         comboBox.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),50));
 
-        for (int i = 1; i <= 10; i++) {
-            comboBox.addItem("test " + i);
-        }
+
+        comboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object item = e.getItem();
+                if (!item.equals(holdLastClicked)) {
+                    events.actionJComboxMain(e);
+                    holdLastClicked = item;
+                }else{
+                    holdLastClicked = item;
+                }
+            }
+        });
+
+        comboBox.addItem("Choose an option");
+        comboBox.addItem("test1");
+
         return comboBox;
     }
 }

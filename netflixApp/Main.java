@@ -14,7 +14,8 @@ public class Main {
     public static void main(String[] args) {
         Interface ui = new Interface();
         connector connector = new connector();
-//        Connection conn = connector.getCon();
+        Connection conn = connector.getCon();
+
 
         ui.setLayoutType(Layout.MAIN);
         SwingUtilities.invokeLater(ui);
