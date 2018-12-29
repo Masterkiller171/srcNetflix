@@ -14,15 +14,18 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUI {
     private Container container;
     private Interface width = new Interface(); //Getting the width from the interface class to make the app more dynamic
     private Layout layoutType;
+    private ArrayList listWithData;
 
     public GUI(Container container, Layout layoutType) {
         this.container = container;
         this.layoutType = layoutType;
+        listWithData = new ArrayList();
     }
 
     //Constructing the layout of the whole visible part of the application
@@ -148,7 +151,8 @@ public class GUI {
         switch (lay){
             case MAIN:
             page.setUpExplainText("Here comes the information regarding the data shown below\n\n" + randomWordGen(200),190);
-            page.setUpdataShowText("Here comes the sql data ", 190);
+            page.setUpdataShowText(this.listWithData, 190);
+            page.setContainer(this.container);
             middlePanel = page.getCenterSector();
             middlePanel.setVisible(true);
             break;
@@ -218,6 +222,11 @@ public class GUI {
     //Returning the constructed layout to the interface class
     public Container getUi() {
         return createLayout(layoutType);
+    }
+
+    //Setting up the list with the database data
+    public void setArrayWithData(ArrayList list){
+        this.listWithData = list;
     }
 
 }

@@ -2,6 +2,7 @@ package netflixApp.GUI.GUIelements.centerSector;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class newAccount implements allPagesInterface{
     private String ExplainTxt;
@@ -40,7 +41,12 @@ public class newAccount implements allPagesInterface{
     }
 
     @Override
-    public void setUpdataShowText(String data, int height) {
+    public void setUpdataShowText(ArrayList listWithData, int height) {
+
+    }
+
+    @Override
+    public void setContainer(Container container) {
 
     }
 

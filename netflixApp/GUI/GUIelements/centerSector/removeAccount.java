@@ -2,6 +2,7 @@ package netflixApp.GUI.GUIelements.centerSector;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class removeAccount implements allPagesInterface {
     private String explainText;
@@ -35,9 +36,13 @@ public class removeAccount implements allPagesInterface {
     }
 
     @Override
-    public void setUpdataShowText(String data, int height) {
+    public void setUpdataShowText(ArrayList listWithData, int height) {
         this.dataTxtHeight = height;
-        this.dataText = data;
+    }
+
+    @Override
+    public void setContainer(Container container) {
+
     }
 
     @Override

@@ -6,6 +6,7 @@ import netflixApp.GUI.GUIelements.centerSector.createPieChart;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Interface implements Runnable{
     private JFrame frame;
@@ -22,7 +23,7 @@ public class Interface implements Runnable{
         //frame.setUndecorated(true);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        createElements(frame.getContentPane());
+        createElements(frame.getContentPane(), null);
 
         frame.pack();
         frame.setVisible(true);
@@ -30,11 +31,12 @@ public class Interface implements Runnable{
 
 
     //Will determent which layoutType is chosen en adding the layout to the canvas
-    public Container createElements(Container container) {
+    public Container createElements(Container container, ArrayList list) {
             switch (this.layoutType) {
                 case MAIN:
                     container.removeAll();
                     GUI ui = new GUI(container, Layout.MAIN);
+                    ui.setArrayWithData(list);
                     return ui.getUi();
 
                 case REMOVEACC:

@@ -9,18 +9,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 public class mainPage implements allPagesInterface{
     private Interface getWidth = new Interface();
     private String explainTxt;
-    private String dataTxt;
+    private ArrayList dataTxt;
     private int height;
     private int dataHeight;
+    private Container cont;
 
     //Setting up the default settings for the text of the page
     public mainPage() {
         this.explainTxt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit consectetur massa, sed congue nibh. In maximus orci ut mollis semper. Vestibulum quis mi tempor, blandit mauris a, sodales nisi.";
         this.height = 190;
+        cont  = null;
+        dataTxt = new ArrayList();
     }
 
     //Constructing the whole center section into a Jpanel
@@ -51,12 +55,18 @@ public class mainPage implements allPagesInterface{
 
     //Setting up all the data show text
     @Override
-    public void setUpdataShowText(String data, int height){
-        this.dataTxt = data;
+    public void setUpdataShowText(ArrayList listWithData, int height){
+        this.dataTxt = listWithData;
         this.dataHeight = height;
     }
 
+    @Override
+    public void setContainer(Container container) {
+        this.cont = container;
+    }
+
     //Creating textfield to explain content on page
+    @Override
       public JPanel getInfoText(){
         JPanel panel = new JPanel();
 
@@ -74,11 +84,18 @@ public class mainPage implements allPagesInterface{
         return panel;
     }
 
-    private int rows = 15;
+
     //The tab for displaying the queried data from database
     private JPanel getDataText(){
         JPanel panel = new JPanel();
-        GridLayout table = new GridLayout(this.rows,1);
+        GridLayout table;
+
+        if (this.dataTxt != null) {
+            table = new GridLayout(this.dataTxt.size(), 1);
+        }else{
+            table = new GridLayout(0, 1);
+        }
+
         panel.setLayout(table);
         panel = createTable(panel);
         return panel;
@@ -86,8 +103,10 @@ public class mainPage implements allPagesInterface{
 
     //Create a table to show data base data in
     private JPanel createTable(JPanel panel){
-        for (int i = 0; i < this.rows; i++) {
-            panel.add(createTableRow(new JTextPane(), i));
+        if (this.dataTxt != null) {
+            for (int i = 0; i < this.dataTxt.size(); i++) {
+                panel.add(createTableRow(new JTextPane(), i));
+            }
         }
         return panel;
     }
@@ -95,7 +114,7 @@ public class mainPage implements allPagesInterface{
     //Adds attributes to each JTextpane object based on it's row index
     private JTextPane createTableRow(JTextPane txt, int row){
         txt.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),this.dataHeight / 10));
-        txt.setText(this.dataTxt);
+        txt.setText(this.dataTxt.get(row) + "");
         txt.setEditable(false);
 
         if (row % 2 == 1){
@@ -121,7 +140,7 @@ public class mainPage implements allPagesInterface{
             public void itemStateChanged(ItemEvent e) {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
-                    events.actionJComboxMain(e);
+                    events.actionJComboxMain(e,cont);
                     holdLastClicked = item;
                 }else{
                     holdLastClicked = item;

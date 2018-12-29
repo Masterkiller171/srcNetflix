@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 
 public class Eventlisteners implements ActionListener {
     private Container cont;
@@ -42,40 +43,44 @@ public class Eventlisteners implements ActionListener {
         }
     }
 
-    public void actionJComboxMain(ItemEvent e){
+    //This is the method which controls the combobox on the mainpage
+    public void actionJComboxMain(ItemEvent e, Container container){
         dataBaseData data = new dataBaseData();
+        this.cont = container;
         switch (e.getItem() + ""){
             case "test1":
-                System.out.println(data.getDistinctSeriesTitle());
+
                 ui = new Interface();
                 ui.setLayoutType(Layout.MAIN);
+                ui.createElements(this.cont,data.getDistinctSeriesTitle());
             break;
         }
     }
-
+    
+    //This method will show the new account page
     private void newAcc() {
         ui = new Interface();
         ui.setLayoutType(Layout.NEWACCOUNT);
-        ui.createElements(cont);
+        ui.createElements(cont,null);
     }
 
     //Will choose the layoutType 2 which is currently an empty center canvas
     private void resetPage(){
         ui = new Interface();
         ui.setLayoutType(Layout.REMOVEACC);
-        ui.createElements(cont);
+        ui.createElements(cont,null);
     }
 
     //Will return the page to layoutType 1 which is the main page
     private void returnPage(){
         ui = new Interface();
         ui.setLayoutType(Layout.MAIN);
-        ui.createElements(cont);
+        ui.createElements(cont,null);
     }
 
     private void pieCharts(){
         ui = new Interface();
         ui.setLayoutType(Layout.PIECHART);
-        ui.createElements(cont);
+        ui.createElements(cont,null);
     }
 }

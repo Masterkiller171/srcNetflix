@@ -48,9 +48,13 @@ public class piechart implements allPagesInterface {
 
     //Sets up text for piechart (data)
     @Override
-    public void setUpdataShowText(String data, int height) {
-        this.dataText = data;
+    public void setUpdataShowText(ArrayList listWithData, int height) {
         this.dataHeight = height;
+    }
+
+    @Override
+    public void setContainer(Container container) {
+
     }
 
     //Creating textfield to explain content on page
