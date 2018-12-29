@@ -17,10 +17,10 @@ public class connector {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Gefeliciteerd de database is geconnect wil je nu een sticker");
+            System.out.println("A connection has been established between the client and the database. Alexa THIS is EPIC!");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("Database is niet geconnect noob");
+            System.out.println("The client couldn't connect to the database. I'm sorry, please don't spank me.");
         }
         return con;
     }

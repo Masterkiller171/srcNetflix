@@ -91,7 +91,7 @@ public class mainPage implements allPagesInterface{
         GridLayout table;
 
         if (this.dataTxt != null) {
-            table = new GridLayout(this.dataTxt.size(), 1);
+           table = new GridLayout(this.dataTxt.size(), 1);
         }else{
             table = new GridLayout(0, 1);
         }
@@ -149,7 +149,13 @@ public class mainPage implements allPagesInterface{
         });
 
         comboBox.addItem("Choose an option");
-        comboBox.addItem("test1");
+        comboBox.addItem("show all different series");
+        comboBox.addItem("show top 15 distinct titles of episodes");
+        comboBox.addItem("show all languages");
+        comboBox.addItem("show all genres");
+        comboBox.addItem("show all ids who saw the sherlock serie");
+        comboBox.addItem("show all ids who saw the breaking bad serie");
+        comboBox.addItem("show all ids who saw the fargo serie");
 
         return comboBox;
     }

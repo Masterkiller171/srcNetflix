@@ -20,19 +20,45 @@ public class dataBaseData {
         }
     }
 
-    public ArrayList<String> getDistinctSeriesTitle(){
-        ArrayList<String> films = new ArrayList<>();
+    public ArrayList<Object> getDistinctSeriesTitle(){
+        return getResultSetOfQuery("SELECT DISTINCT serie FROM serie$;");
+    }
 
+    public ArrayList<Object> getTop15EpisodesTitle(){
+        return getResultSetOfQuery("SELECT TOP 15 Titel FROM seizoen$;");
+    }
+
+    public ArrayList<Object> getAllDistinctLanguages(){
+        return getResultSetOfQuery("SELECT Taal FROM (SELECT Taal FROM persoon$ UNION SELECT Taal FROM film$) t3 ORDER BY Taal;");
+    }
+
+    public ArrayList<Object> getAllDistinctGenres(){
+        return getResultSetOfQuery("SELECT DISTINCT Genre FROM persoon$;");
+    }
+
+    public ArrayList<Object> getAllIdsWhoSawSherlock(){
+        return getResultSetOfQuery("SELECT Id FROM seizoen$" + " JOIN seizoen_serie$ ON seizoen_serie$.SeizoenID = seizoen$.seizoenId" + " JOIN serie$ ON seizoen_serie$.SerieID = serie$.serieID" + " WHERE serie$.serie = 'Sherlock';");
+    }
+
+    public ArrayList<Object> getAllIdsWhoSawBreakingBad(){
+        return getResultSetOfQuery("SELECT Id FROM seizoen$" + " JOIN seizoen_serie$ ON seizoen_serie$.SeizoenID = seizoen$.seizoenId" + " JOIN serie$ ON seizoen_serie$.SerieID = serie$.serieID" + " WHERE serie$.serie = 'Breaking bad';");
+    }
+
+    public ArrayList<Object> getAllIdsWhoSawFargo(){
+        return getResultSetOfQuery("SELECT Id FROM seizoen$" + " JOIN seizoen_serie$ ON seizoen_serie$.SeizoenID = seizoen$.seizoenId" + " JOIN serie$ ON seizoen_serie$.SerieID = serie$.serieID" + " WHERE serie$.serie = 'Fargo';");
+    }
+
+    private ArrayList<Object> getResultSetOfQuery(String query){
+        ArrayList<Object> datalist = new ArrayList<>();
         try {
-           this.rs = this.st.executeQuery("select serie FROM serie$");
+            this.rs = this.st.executeQuery(query);
 
             while (rs.next()){
-                films.add(rs.getString(1));
+                datalist.add(rs.getString(1));
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return films;
+        return datalist;
     }
 }

@@ -48,15 +48,42 @@ public class Eventlisteners implements ActionListener {
         dataBaseData data = new dataBaseData();
         this.cont = container;
         switch (e.getItem() + ""){
-            case "test1":
+            case "show all different series":
+                actionCombox(data.getDistinctSeriesTitle());
+            break;
 
-                ui = new Interface();
-                ui.setLayoutType(Layout.MAIN);
-                ui.createElements(this.cont,data.getDistinctSeriesTitle());
+            case "show top 15 distinct titles of episodes":
+                actionCombox(data.getTop15EpisodesTitle());
+            break;
+
+            case "show all languages":
+                actionCombox(data.getAllDistinctLanguages());
+            break;
+
+            case "show all genres":
+                actionCombox(data.getAllDistinctGenres());
+            break;
+
+            case "show all ids who saw the sherlock serie":
+                actionCombox(data.getAllIdsWhoSawSherlock());
+            break;
+
+            case "show all ids who saw the breaking bad serie":
+                actionCombox(data.getAllIdsWhoSawBreakingBad());
+            break;
+
+            case "show all ids who saw the fargo serie":
+                actionCombox(data.getAllIdsWhoSawFargo());
             break;
         }
     }
-    
+
+    private void actionCombox(ArrayList<Object> data){
+        ui = new Interface();
+        ui.setLayoutType(Layout.MAIN);
+        ui.createElements(this.cont, data);
+    }
+
     //This method will show the new account page
     private void newAcc() {
         ui = new Interface();
