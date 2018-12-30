@@ -71,7 +71,7 @@ public class newAccount implements allPagesInterface{
             events = new Eventlisteners();
             panol.add(getAgeBox());
             panol.add(getLangBox());
-
+            panol.add(getGenreBox());
         return panol;
     }
 
@@ -134,7 +134,13 @@ public class newAccount implements allPagesInterface{
         JComboBox choiceGenreLang = new JComboBox();
         choiceGenreLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
 
-        choiceGenreLang.addItem("What is your preferred language?");
+        choiceGenreLang.addItem("What is your favourite genre?");
+        choiceGenreLang.addItem("Spanning");
+        choiceGenreLang.addItem("Detective");
+        choiceGenreLang.addItem("Sci-fi");
+        choiceGenreLang.addItem("Fantasy");
+        choiceGenreLang.addItem("War");
+        choiceGenreLang.addItem("Drama");
 
 
         choiceGenreLang.addItemListener(new ItemListener() {

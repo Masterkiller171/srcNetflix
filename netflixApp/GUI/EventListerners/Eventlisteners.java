@@ -263,13 +263,36 @@ public class Eventlisteners implements ActionListener {
             break;
         }
     }
-    
+
     //-----------------------------------------------
     public void actionJcomboboxACCGenre(ItemEvent e, Container container) {
         data = new dataBaseData();
         this.cont = container;
 
         switch (String.valueOf(e.getItem())) {
-        }
+            case "Spanning":
+                System.out.println("Dat is spannend man");
+            break;
+
+            case "Detective":
+                System.out.println("lekker geheimpjes oplossen");
+            break;
+
+            case "Sci-fi":
+                System.out.println("FUUUUUUTTTUUUUUUUUUURRRRRRRREEEE");
+            break;
+
+            case "Fantasy":
+                System.out.println("eenhoorn");
+            break;
+
+            case "War":
+                System.out.println("this is so sad");
+            break;
+
+            case "Drama":
+                System.out.println("niet leuk saai asf");
+            break;
+            }
         }
 }
