@@ -26,6 +26,7 @@ public class newAccount implements allPagesInterface{
 
         panel.add(getInfoText());
         panel.add(getForm(new JPanel()));
+
         return panel;
     }
 
@@ -72,6 +73,13 @@ public class newAccount implements allPagesInterface{
             panol.add(getAgeBox());
             panol.add(getLangBox());
             panol.add(getGenreBox());
+
+            JButton finished = new JButton("finished!");
+            finished.addActionListener(events);
+            finished.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+
+
+            panol.add(finished);
         return panol;
     }
 

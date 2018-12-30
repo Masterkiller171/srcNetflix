@@ -178,7 +178,7 @@ public class GUI {
 
             case NEWACCOUNT:
                 newAccount newacc = new newAccount();
-                newacc.setUpExplainText(randomWordGen(300),40);
+                newacc.setUpExplainText(randomWordGen(300),190);
                 middlePanel = newacc.getCenterSector();
                 middlePanel.setVisible(true);
                 break;

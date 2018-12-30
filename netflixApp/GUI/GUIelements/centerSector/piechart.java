@@ -113,7 +113,7 @@ public class piechart implements allPagesInterface {
         createPieChart pie = new createPieChart(this.pieValues, this.colourAndPos);
         GridLayout grid = new GridLayout(1,2);
         panel.setLayout(grid);
-        panel.setPreferredSize(new Dimension((width/4), 200));
+        panel.setPreferredSize(new Dimension((width/3), 200));
 
         JPanel legend = new JPanel();
         GridLayout gridL = new GridLayout(10,1);

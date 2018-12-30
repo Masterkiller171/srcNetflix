@@ -42,6 +42,15 @@ public class Eventlisteners implements ActionListener {
             case "create new account":
                 newAcc();
                 break;
+            case "finished!":
+                insertDataintoDb();
+                break;
+        }
+    }
+    private void insertDataintoDb(){
+        System.out.println("shoving that good shit into the database");
+        if (!this.age.isEmpty() && !this.language.isEmpty() && !this.genre.isEmpty()){
+            data.uploadAccToDatabase(age,language,genre);
         }
     }
 
@@ -216,6 +225,10 @@ public class Eventlisteners implements ActionListener {
 
     //----------------------------------------------------------------------------------------------------------------------
     //This is the method which controls the age combobox on the new account page
+    private String age;
+    private String language;
+    private String genre;
+
     public void actionJcomboboxACCAge(ItemEvent e, Container container){
         data = new dataBaseData();
         this.cont = container;
@@ -223,12 +236,16 @@ public class Eventlisteners implements ActionListener {
 
         if (age < 12){
             System.out.println("6 jaar of ouder");
+            this.age = "6 jaar of ouder";
         }else if(age >= 12 && age < 16){
             System.out.println("12 jaar of ouder");
+            this.age = "12 jaar of ouder";
         }else if (age >= 16 && age < 18){
             System.out.println("16 jaar of ouder");
+            this.age = "16 jaar of ouder";
         }else{
             System.out.println("18 jaar of ouder");
+            this.age = "18 jaar of ouder";
         }
     }
 
@@ -237,31 +254,7 @@ public class Eventlisteners implements ActionListener {
         data = new dataBaseData();
         this.cont = container;
 
-        switch (String.valueOf(e.getItem())){
-            case "Mandarin":
-                System.out.println("rice");
-            break;
-
-            case "Spanish":
-                System.out.println("burrito");
-            break;
-
-            case "English":
-                System.out.println("tea");
-            break;
-
-            case "Dutch":
-                System.out.println("cheese");
-            break;
-
-            case "French":
-                System.out.println("baguette");
-            break;
-
-            case "German":
-                System.out.println("beer");
-            break;
-        }
+        this.language = String.valueOf(e.getItem());
     }
 
     //-----------------------------------------------
@@ -269,30 +262,6 @@ public class Eventlisteners implements ActionListener {
         data = new dataBaseData();
         this.cont = container;
 
-        switch (String.valueOf(e.getItem())) {
-            case "Spanning":
-                System.out.println("Dat is spannend man");
-            break;
-
-            case "Detective":
-                System.out.println("lekker geheimpjes oplossen");
-            break;
-
-            case "Sci-fi":
-                System.out.println("FUUUUUUTTTUUUUUUUUUURRRRRRRREEEE");
-            break;
-
-            case "Fantasy":
-                System.out.println("eenhoorn");
-            break;
-
-            case "War":
-                System.out.println("this is so sad");
-            break;
-
-            case "Drama":
-                System.out.println("niet leuk saai asf");
-            break;
-            }
-        }
+        this.genre = String.valueOf(e.getItem());
+    }
 }

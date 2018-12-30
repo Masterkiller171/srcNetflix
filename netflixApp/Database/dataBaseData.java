@@ -1,5 +1,7 @@
 package netflixApp.Database;
 
+import netflixApp.GUI.Interface;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -106,6 +108,15 @@ public class dataBaseData {
     public ArrayList<Object> getCountGenresSpanning(){
         return getResultSetOfQuery("SELECT COUNT(Genre) FROM persoon$ WHERE Genre = 'Spanning';");
     }
+    //-----------------------------------------
+    public void uploadAccToDatabase(String age, String language, String genre){
+        String str = String.valueOf(getResultSetOfQuery("SELECT MAX(Id) FROM persoon$;"));
+        str = str.replaceAll("\\[", "");
+        str = str.replaceAll("]","");
+
+        setInsertIntoDB("INSERT INTO persoon$ (Id, Leeftijd, Taal, Genre) VALUES('"+ (Float.parseFloat(str) + 1)+ "', '"+ age + "', '" + language + "', '" + genre + "')");
+        System.out.println("Inserted " + age + " " + language + " " + genre);
+    }
 
     //-----------------------------------------------------------------------------------
     private ArrayList<Object> getResultSetOfQuery(String query){
@@ -120,5 +131,14 @@ public class dataBaseData {
             e.printStackTrace();
         }
         return datalist;
+    }
+
+    //-----------------------------------------
+    private void setInsertIntoDB(String insert){
+        try {
+            this.st.execute(insert);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

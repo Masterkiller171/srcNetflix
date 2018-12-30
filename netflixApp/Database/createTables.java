@@ -35,7 +35,8 @@ public class createTables {
                 "            [lijkt een beetje op] [nvarchar](255) NULL" +
                 "    ) ON [PRIMARY]" +
                 "    SET ANSI_NULLS ON" +
-                "    SET QUOTED_IDENTIFIER ON";
+                "    SET QUOTED_IDENTIFIER ON create unique index [persoon$_Id_uindex]" +
+                "  on [persoon$] (Id)";
 
         String seizoen = " CREATE TABLE [dbo].[seizoen$](" +
                 "            [seizoenId] [float] NULL," +
