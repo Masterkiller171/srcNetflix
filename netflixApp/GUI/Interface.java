@@ -23,7 +23,7 @@ public class Interface implements Runnable{
         //frame.setUndecorated(true);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        createElements(frame.getContentPane(), null);
+        createElements(frame.getContentPane(), null,null);
 
         frame.pack();
         frame.setVisible(true);
@@ -31,7 +31,7 @@ public class Interface implements Runnable{
 
 
     //Will determent which layoutType is chosen en adding the layout to the canvas
-    public Container createElements(Container container, ArrayList list) {
+    public Container createElements(Container container, ArrayList list, ArrayList<String> groupNames) {
             switch (this.layoutType) {
                 case MAIN:
                     container.removeAll();
@@ -47,6 +47,8 @@ public class Interface implements Runnable{
                 case PIECHART:
                    container.removeAll();
                    ui = new GUI(container, Layout.PIECHART);
+                   ui.setPieValues(list);
+                   ui.setGroupNames(groupNames);
                    return ui.getUi();
 
                 case NEWACCOUNT:

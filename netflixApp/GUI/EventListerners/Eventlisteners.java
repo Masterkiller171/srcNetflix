@@ -3,6 +3,7 @@ package netflixApp.GUI.EventListerners;
 import netflixApp.Database.dataBaseData;
 import netflixApp.GUI.GUIelements.Layout;
 import netflixApp.GUI.Interface;
+import org.omg.CORBA.INTERNAL;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class Eventlisteners implements ActionListener {
     private Container cont;
     private Interface ui;
+    private dataBaseData data;
 
     //Constructor will receive the container object from the GUI class
     public Eventlisteners(Container cont) {
@@ -43,9 +45,37 @@ public class Eventlisteners implements ActionListener {
         }
     }
 
+    //This method will show the new account page
+    private void newAcc() {
+        ui = new Interface();
+        ui.setLayoutType(Layout.NEWACCOUNT);
+        ui.createElements(cont,null,null);
+    }
+
+    //Will choose the layoutType 2 which is currently an empty center canvas
+    private void resetPage(){
+        ui = new Interface();
+        ui.setLayoutType(Layout.REMOVEACC);
+        ui.createElements(cont,null,null);
+    }
+
+    //Will return the page to layoutType 1 which is the main page
+    private void returnPage(){
+        ui = new Interface();
+        ui.setLayoutType(Layout.MAIN);
+        ui.createElements(cont,null,null);
+    }
+
+    private void pieCharts(){
+        ui = new Interface();
+        ui.setLayoutType(Layout.PIECHART);
+        ui.createElements(cont,null,null);
+    }
+
+    //---------------------------------------------------------------------------------------------------
     //This is the method which controls the combobox on the mainpage
     public void actionJComboxMain(ItemEvent e, Container container){
-        dataBaseData data = new dataBaseData();
+        data = new dataBaseData();
         this.cont = container;
         switch (e.getItem() + ""){
             case "show all different series":
@@ -81,33 +111,72 @@ public class Eventlisteners implements ActionListener {
     private void actionCombox(ArrayList<Object> data){
         ui = new Interface();
         ui.setLayoutType(Layout.MAIN);
-        ui.createElements(this.cont, data);
+        ui.createElements(this.cont, data,null);
     }
 
-    //This method will show the new account page
-    private void newAcc() {
-        ui = new Interface();
-        ui.setLayoutType(Layout.NEWACCOUNT);
-        ui.createElements(cont,null);
+    //--------------------------------------------------------------------------------------------------------------
+    //This is the method which controls the combobox on the piechart page
+    public void actionJcomboboxPIE(ItemEvent e, Container container){
+        data = new dataBaseData();
+        this.cont = container;
+        switch (e.getItem() + ""){
+            case "show series":
+                createShowSeries();
+            break;
+
+            case "show age distribution":
+                createShowAgeDist();
+            break;
+        }
     }
 
-    //Will choose the layoutType 2 which is currently an empty center canvas
-    private void resetPage(){
-        ui = new Interface();
-        ui.setLayoutType(Layout.REMOVEACC);
-        ui.createElements(cont,null);
+    private void createShowAgeDist(){
+        ArrayList<Integer> groupValue = new ArrayList<>();
+        ArrayList<String> groupNames  = new ArrayList<>();
+
+        groupValue.add(stripObjectToInt(data.getCount6Jaar()));
+        groupValue.add(stripObjectToInt(data.getCount12Jaar()));
+        groupValue.add(stripObjectToInt(data.getCount16Jaar()));
+        groupValue.add(stripObjectToInt(data.getCount18Jaar()));
+
+        groupNames.add("6 jaar en ouder");
+        groupNames.add("12 jaar en ouder");
+        groupNames.add("16 jaar en ouder");
+        groupNames.add("18 jaar en ouder");
+
+        actionComboxPIE(groupValue, groupNames);
     }
 
-    //Will return the page to layoutType 1 which is the main page
-    private void returnPage(){
-        ui = new Interface();
-        ui.setLayoutType(Layout.MAIN);
-        ui.createElements(cont,null);
+    private void createShowSeries(){
+        ArrayList<Integer> groupValue = new ArrayList<>();
+        ArrayList<String> groupNames  = new ArrayList<>();
+
+        groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawBreakingBad()));
+        groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawFargo()));
+        groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawSherlock()));
+
+        groupNames.add("Breaking Bad");
+        groupNames.add("Fargo");
+        groupNames.add("Sherlock");
+
+        actionComboxPIE(groupValue, groupNames);
     }
 
-    private void pieCharts(){
+    //Takes an object as parameter and converts it into an int
+    private int stripObjectToInt(Object obj){
+        String str = String.valueOf(obj);
+        str = str.replaceAll("\\[", "");
+        str = str.replaceAll("]","");
+        return Integer.parseInt(str);
+    }
+
+
+    private void actionComboxPIE(ArrayList<Integer> data, ArrayList<String> groupNames){
         ui = new Interface();
         ui.setLayoutType(Layout.PIECHART);
-        ui.createElements(cont,null);
+        ui.createElements(this.cont, data,groupNames);
     }
+
+    //----------------------------------------------------------------------------------------------------------------------
+
 }

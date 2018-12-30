@@ -1,9 +1,13 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
+import netflixApp.GUI.EventListerners.Eventlisteners;
 import netflixApp.GUI.Interface;
+import org.omg.CORBA.INTERNAL;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,24 +21,24 @@ public class piechart implements allPagesInterface {
     private ArrayList<Integer> pieValues;
     private Map<Integer, Color> colourAndPos;
     private int width = new Interface().getX();
+    private ArrayList<String> groupNames;
+
+    private Container container;
 
     public piechart() {
         this.explainHeight = 190;
         this.explainText = "blank page";
-        pieValues = new ArrayList<>();
         colourAndPos = new HashMap<>();
-        setPieValues();
+        container = null;
     }
 
     //Generated the piechart Jpanel
     @Override
     public JPanel getCenterSector() {
         JPanel panel = new JPanel();
-        GridLayout grid = new GridLayout(3,1);
-        panel.setLayout(grid);
-
         panel.add(getInfoText());
         panel.add(createLegend());
+        panel.add(comboBoxPie());
 
         return panel;
     }
@@ -54,7 +58,33 @@ public class piechart implements allPagesInterface {
 
     @Override
     public void setContainer(Container container) {
+        this.container = container;
+    }
 
+    private Object holdLastClicked;
+    private Eventlisteners events;
+    private JComboBox comboBoxPie(){
+      JComboBox comboBox = new JComboBox();
+      events = new Eventlisteners();
+      comboBox.setPreferredSize(new Dimension((int)(width / 1.5),50));
+
+      comboBox.addItemListener(new ItemListener() {
+          @Override
+          public void itemStateChanged(ItemEvent e) {
+              Object item = e.getItem();
+              if (!item.equals(holdLastClicked)) {
+                  holdLastClicked = item;
+                  events.actionJcomboboxPIE(e, container);
+              }else{
+                  holdLastClicked = item;
+              }
+          }
+      });
+
+      comboBox.addItem("Choose an option");
+      comboBox.addItem("show series");
+      comboBox.addItem("show age distribution");
+      return comboBox;
     }
 
     //Creating textfield to explain content on page
@@ -74,42 +104,59 @@ public class piechart implements allPagesInterface {
         return panel;
     }
 
+    //Creates the legend of the pie chart and the pie chart it self
     private JPanel createLegend(){
         JPanel panel = new JPanel();
-        createPieChart pie = new createPieChart();
+        createPieChart pie = new createPieChart(this.pieValues, this.colourAndPos);
         GridLayout grid = new GridLayout(1,2);
         panel.setLayout(grid);
+        panel.setPreferredSize(new Dimension((width/4), 200));
 
         JPanel legend = new JPanel();
-        GridLayout gridL = new GridLayout(10,6);
+        GridLayout gridL = new GridLayout(10,1);
         legend.setLayout(gridL);
 
-        for (int i = 0; i < this.pieValues.size(); i++) {
-            for (int j = 0; j < 5; j++) {
-                legend.add(new JLabel());
-            }
-
+        if (this.pieValues != null) {
+            for (int i = 0; i < this.pieValues.size(); i++) {
                 JTextPane newLb = new JTextPane();
-                newLb.setEditable(false);
                 newLb.setBackground(colourAndPos.get(i));
-                newLb.setText(i + 1 + ".  " + this.pieValues.get(i));
-                legend.add(newLb);
-        }
+                newLb.setText(this.groupNames.get(i) + ":  " + this.pieValues.get(i));
 
+                addLegendAttributes(newLb);
+                legend.add(newLb);
+            }
+        }else{
+            System.out.println("empty array");
+        }
         panel.add(legend);
         panel.add(pie);
 
         return panel;
     }
 
+    //Adding attributes to the legend sector
+    private JTextPane addLegendAttributes(JTextPane txt){
+        txt.setFont(new Font("Arial", Font.BOLD, 15));
+        txt.setEditable(false);
+        return txt;
+    }
+
     //Sets the piechart values (currently it's random but this can be changed to a normal array)
-   public void setPieValues(/*ArrayList<Integer> pieValues*/) {
+    public void setPieValues(ArrayList<Integer> pieValues) {
+        this.pieValues = new ArrayList<>();
         int pos = 0;
-        for (int i = 0; i < 100; i++) {
-            this.pieValues.add((i + 1) * 22);
-            colourAndPos.put(pos, getColour(pos));
-            pos++;
+
+        if (pieValues != null) {
+            for (int i = 0; i < pieValues.size(); i++) {
+                this.pieValues.add(pieValues.get(i));
+                colourAndPos.put(pos, getColour(pos));
+                pos++;
+            }
         }
+    }
+
+    public void setGroupNames(ArrayList<String> groupNames) {
+        this.groupNames = groupNames;
     }
 
     //Generating a new colour for each chart 10 possibilities

@@ -21,11 +21,14 @@ public class GUI {
     private Interface width = new Interface(); //Getting the width from the interface class to make the app more dynamic
     private Layout layoutType;
     private ArrayList listWithData;
+    private ArrayList<Integer> pieValues;
+    private ArrayList<String> groupNames;
 
     public GUI(Container container, Layout layoutType) {
         this.container = container;
         this.layoutType = layoutType;
         listWithData = new ArrayList();
+        groupNames = new ArrayList<>();
     }
 
     //Constructing the layout of the whole visible part of the application
@@ -166,6 +169,9 @@ public class GUI {
             case PIECHART:
             piechart piechart = new piechart();
             piechart.setUpExplainText(randomWordGen(200), 190);
+            piechart.setContainer(this.container);
+            piechart.setPieValues(this.pieValues);
+            piechart.setGroupNames(this.groupNames);
             middlePanel = piechart.getCenterSector();
             middlePanel.setVisible(true);
             break;
@@ -229,4 +235,16 @@ public class GUI {
         this.listWithData = list;
     }
 
+    public void setPieValues(ArrayList pieValues) {
+        this.pieValues = new ArrayList<>();
+        if (pieValues != null) {
+            for (Object pieValue : pieValues) {
+                this.pieValues.add((int) pieValue);
+            }
+        }
+    }
+
+    public void setGroupNames(ArrayList<String> groupNames) {
+        this.groupNames = groupNames;
+    }
 }
