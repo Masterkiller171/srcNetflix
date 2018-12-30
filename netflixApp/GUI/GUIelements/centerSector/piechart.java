@@ -84,6 +84,9 @@ public class piechart implements allPagesInterface {
       comboBox.addItem("Choose an option");
       comboBox.addItem("show series");
       comboBox.addItem("show age distribution");
+      comboBox.addItem("show series that are similar");
+      comboBox.addItem("show genre distribution");
+
       return comboBox;
     }
 

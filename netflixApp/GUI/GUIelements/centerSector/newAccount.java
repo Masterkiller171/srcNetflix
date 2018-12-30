@@ -1,13 +1,18 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
+import netflixApp.GUI.EventListerners.Eventlisteners;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class newAccount implements allPagesInterface{
     private String ExplainTxt;
     private int explainHeight;
     private int sWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private Container cont;
 
     public newAccount() {
         this.explainHeight = 60;
@@ -20,17 +25,7 @@ public class newAccount implements allPagesInterface{
         JPanel panel = new JPanel();
 
         panel.add(getInfoText());
-
-        GridLayout grid = new GridLayout(10,1,5,5);
-        JPanel panol = new JPanel();
-        panol.setLayout(grid);
-
-        for (int i = 0; i < 10; i++) {
-            panol.add(getForm(new JPanel(), "Test " + (i + 1)));
-        }
-
-
-        panel.add(panol);
+        panel.add(getForm(new JPanel()));
         return panel;
     }
 
@@ -47,7 +42,7 @@ public class newAccount implements allPagesInterface{
 
     @Override
     public void setContainer(Container container) {
-
+        this.cont = container;
     }
 
     public JPanel getInfoText(){
@@ -67,15 +62,94 @@ public class newAccount implements allPagesInterface{
         return panel;
     }
 
-    private JPanel getForm(JPanel panol, String labelNam){
-            JLabel label = new JLabel(labelNam);
-            panol.add(label);
-
-            JTextField textField = new JTextField();
-            textField.setPreferredSize(new Dimension(sWidth / 3, 30));
-            panol.add(textField);
+    //--------------------------------------------------------------------
+    private Object holdLastClicked;
+    private Eventlisteners events;
+    private JPanel getForm(JPanel panol){
+        GridLayout grid = new GridLayout(10,1,5,5);
+        panol.setLayout(grid);
+            events = new Eventlisteners();
+            panol.add(getAgeBox());
+            panol.add(getLangBox());
 
         return panol;
+    }
+
+    private JComboBox getAgeBox(){
+        JComboBox choiceBoxAge = new JComboBox();
+        choiceBoxAge.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+
+        choiceBoxAge.addItem("What is your age?");
+
+        for (int i = 6; i < 18; i++) {
+            choiceBoxAge.addItem(i + " year");
+        }
+
+        choiceBoxAge.addItem("18 years or older");
+
+        choiceBoxAge.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object item = e.getItem();
+                if (!item.equals(holdLastClicked)) {
+                    holdLastClicked = item;
+                    events.actionJcomboboxACCAge(e, cont);
+                }else{
+                    holdLastClicked = item;
+                }
+            }
+        });
+        return choiceBoxAge;
+    }
+
+    private JComboBox getLangBox(){
+        JComboBox choiceBoxLang = new JComboBox();
+        choiceBoxLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+
+        choiceBoxLang.addItem("What is your preferred language?");
+        choiceBoxLang.addItem("Mandarin");
+        choiceBoxLang.addItem("Spanish");
+        choiceBoxLang.addItem("English");
+        choiceBoxLang.addItem("Dutch");
+        choiceBoxLang.addItem("French");
+        choiceBoxLang.addItem("German");
+
+
+        choiceBoxLang.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object item = e.getItem();
+                if (!item.equals(holdLastClicked)) {
+                    holdLastClicked = item;
+                    events.actionJcomboboxACCLang(e, cont);
+                }else{
+                    holdLastClicked = item;
+                }
+            }
+        });
+        return choiceBoxLang;
+    }
+
+    private JComboBox getGenreBox(){
+        JComboBox choiceGenreLang = new JComboBox();
+        choiceGenreLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+
+        choiceGenreLang.addItem("What is your preferred language?");
+
+
+        choiceGenreLang.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object item = e.getItem();
+                if (!item.equals(holdLastClicked)) {
+                    holdLastClicked = item;
+                    events.actionJcomboboxACCGenre(e, cont);
+                }else{
+                    holdLastClicked = item;
+                }
+            }
+        });
+        return choiceGenreLang;
     }
 
 }

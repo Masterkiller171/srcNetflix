@@ -77,7 +77,7 @@ public class Eventlisteners implements ActionListener {
     public void actionJComboxMain(ItemEvent e, Container container){
         data = new dataBaseData();
         this.cont = container;
-        switch (e.getItem() + ""){
+        switch (String.valueOf(e.getItem())){
             case "show all different series":
                 actionCombox(data.getDistinctSeriesTitle());
             break;
@@ -115,11 +115,14 @@ public class Eventlisteners implements ActionListener {
     }
 
     //--------------------------------------------------------------------------------------------------------------
+    private ArrayList<Integer> groupValue;
+    private ArrayList<String> groupNames;
+
     //This is the method which controls the combobox on the piechart page
     public void actionJcomboboxPIE(ItemEvent e, Container container){
         data = new dataBaseData();
         this.cont = container;
-        switch (e.getItem() + ""){
+        switch (String.valueOf(e.getItem())){
             case "show series":
                 createShowSeries();
             break;
@@ -127,37 +130,71 @@ public class Eventlisteners implements ActionListener {
             case "show age distribution":
                 createShowAgeDist();
             break;
+
+            case "show series that are similar":
+                createShowSimilar();
+            break;
+
+            case "show genre distribution":
+                createGenreDistribution();
+            break;
         }
     }
 
+    private void createGenreDistribution(){
+        this.groupValue = new ArrayList<>();
+        this.groupNames = new ArrayList<>();
+
+        this.groupValue.add(stripObjectToInt(data.getCountGenresDetective()));
+        this.groupValue.add(stripObjectToInt(data.getCountGenresSpanning()));
+
+        this.groupNames.add("Series met genre detective bevatten: ");
+        this.groupNames.add("Series met genre spanning bevatten: ");
+
+        actionComboxPIE(groupValue, groupNames);
+    }
+
+    private void createShowSimilar(){
+        this.groupValue = new ArrayList<>();
+        this.groupNames  = new ArrayList<>();
+
+        this.groupValue.add(stripObjectToInt(data.getCountLijktOpFargo()));
+        this.groupValue.add(stripObjectToInt(data.getCountLijktOpBreakingBad()));
+
+        this.groupNames.add("Series lijken op Fargo: ");
+        this.groupNames.add("Series lijken op Breaking Bad: ");
+
+        actionComboxPIE(groupValue, groupNames);
+    }
+
     private void createShowAgeDist(){
-        ArrayList<Integer> groupValue = new ArrayList<>();
-        ArrayList<String> groupNames  = new ArrayList<>();
+        this.groupValue = new ArrayList<>();
+        this.groupNames  = new ArrayList<>();
 
-        groupValue.add(stripObjectToInt(data.getCount6Jaar()));
-        groupValue.add(stripObjectToInt(data.getCount12Jaar()));
-        groupValue.add(stripObjectToInt(data.getCount16Jaar()));
-        groupValue.add(stripObjectToInt(data.getCount18Jaar()));
+        this.groupValue.add(stripObjectToInt(data.getCount6Jaar()));
+        this.groupValue.add(stripObjectToInt(data.getCount12Jaar()));
+        this.groupValue.add(stripObjectToInt(data.getCount16Jaar()));
+        this.groupValue.add(stripObjectToInt(data.getCount18Jaar()));
 
-        groupNames.add("6 jaar en ouder");
-        groupNames.add("12 jaar en ouder");
-        groupNames.add("16 jaar en ouder");
-        groupNames.add("18 jaar en ouder");
+        this.groupNames.add("6 jaar en ouder");
+        this.groupNames.add("12 jaar en ouder");
+        this.groupNames.add("16 jaar en ouder");
+        this.groupNames.add("18 jaar en ouder");
 
         actionComboxPIE(groupValue, groupNames);
     }
 
     private void createShowSeries(){
-        ArrayList<Integer> groupValue = new ArrayList<>();
-        ArrayList<String> groupNames  = new ArrayList<>();
+        this.groupValue = new ArrayList<>();
+        this.groupNames  = new ArrayList<>();
 
-        groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawBreakingBad()));
-        groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawFargo()));
-        groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawSherlock()));
+        this.groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawBreakingBad()));
+        this.groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawFargo()));
+        this.groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawSherlock()));
 
-        groupNames.add("Breaking Bad");
-        groupNames.add("Fargo");
-        groupNames.add("Sherlock");
+        this.groupNames.add("Breaking Bad");
+        this.groupNames.add("Fargo");
+        this.groupNames.add("Sherlock");
 
         actionComboxPIE(groupValue, groupNames);
     }
@@ -178,5 +215,61 @@ public class Eventlisteners implements ActionListener {
     }
 
     //----------------------------------------------------------------------------------------------------------------------
+    //This is the method which controls the age combobox on the new account page
+    public void actionJcomboboxACCAge(ItemEvent e, Container container){
+        data = new dataBaseData();
+        this.cont = container;
+        int age = Integer.parseInt(String.valueOf(e.getItem()).replaceAll("\\D+", ""));
 
+        if (age < 12){
+            System.out.println("6 jaar of ouder");
+        }else if(age >= 12 && age < 16){
+            System.out.println("12 jaar of ouder");
+        }else if (age >= 16 && age < 18){
+            System.out.println("16 jaar of ouder");
+        }else{
+            System.out.println("18 jaar of ouder");
+        }
+    }
+
+    //-----------------------------------------------
+    public void actionJcomboboxACCLang(ItemEvent e, Container container) {
+        data = new dataBaseData();
+        this.cont = container;
+
+        switch (String.valueOf(e.getItem())){
+            case "Mandarin":
+                System.out.println("rice");
+            break;
+
+            case "Spanish":
+                System.out.println("burrito");
+            break;
+
+            case "English":
+                System.out.println("tea");
+            break;
+
+            case "Dutch":
+                System.out.println("cheese");
+            break;
+
+            case "French":
+                System.out.println("baguette");
+            break;
+
+            case "German":
+                System.out.println("beer");
+            break;
+        }
+    }
+    
+    //-----------------------------------------------
+    public void actionJcomboboxACCGenre(ItemEvent e, Container container) {
+        data = new dataBaseData();
+        this.cont = container;
+
+        switch (String.valueOf(e.getItem())) {
+        }
+        }
 }

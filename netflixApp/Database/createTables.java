@@ -186,6 +186,7 @@ public class createTables {
 
         String finalCondition = "END ELSE PRINT 'Tables already exists';";
 
+
         try {
             state.execute(condition + film + persoon + seizoen + seizoen_serie + serie + first20Records + next20Records + nextNext20Records + nextNextNext20Records + lastRecords + finalCondition);
             System.out.println("Db created");

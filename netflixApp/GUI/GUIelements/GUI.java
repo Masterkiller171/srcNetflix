@@ -45,7 +45,7 @@ public class GUI {
     }
 
 
-
+    //---------------------------------------------------------------------------------------------
     //Setting up the North section
     private JPanel setNorth(){
         JPanel panel = new JPanel();
@@ -211,6 +211,7 @@ public class GUI {
         return panel;
     }
 
+    //---------------------------------------------------------------------------------------------------------
     //Aligns the object JtextPane to the center of the X-Axis of the frame
     private JTextPane alignToCenter(JTextPane pane){
         StyledDocument doc = pane.getStyledDocument();
