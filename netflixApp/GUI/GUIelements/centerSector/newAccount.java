@@ -83,6 +83,7 @@ public class newAccount implements allPagesInterface{
         return panol;
     }
 
+    //--------------------------------------
     private JComboBox getAgeBox(){
         JComboBox choiceBoxAge = new JComboBox();
         choiceBoxAge.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
@@ -110,6 +111,7 @@ public class newAccount implements allPagesInterface{
         return choiceBoxAge;
     }
 
+    //--------------------------------------
     private JComboBox getLangBox(){
         JComboBox choiceBoxLang = new JComboBox();
         choiceBoxLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
@@ -138,6 +140,7 @@ public class newAccount implements allPagesInterface{
         return choiceBoxLang;
     }
 
+    //--------------------------------------
     private JComboBox getGenreBox(){
         JComboBox choiceGenreLang = new JComboBox();
         choiceGenreLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));

@@ -13,13 +13,6 @@ public class dataBaseData {
     private ResultSet rs;
 
     public dataBaseData() {
-        conn = new connector().getCon();
-
-        try {
-            this.st = conn.createStatement();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     //Will return all distinct titles from the serie table in the database
@@ -108,20 +101,34 @@ public class dataBaseData {
     public ArrayList<Object> getCountGenresSpanning(){
         return getResultSetOfQuery("SELECT COUNT(Genre) FROM persoon$ WHERE Genre = 'Spanning';");
     }
+
+    //-----------------------------------------
+    public ArrayList<Object> getAllIds(){
+        return getResultSetOfQuery("SELECT Id FROM persoon$");
+    }
+
     //-----------------------------------------
     public void uploadAccToDatabase(String age, String language, String genre){
         String str = String.valueOf(getResultSetOfQuery("SELECT MAX(Id) FROM persoon$;"));
         str = str.replaceAll("\\[", "");
         str = str.replaceAll("]","");
 
-        setInsertIntoDB("INSERT INTO persoon$ (Id, Leeftijd, Taal, Genre) VALUES('"+ (Float.parseFloat(str) + 1)+ "', '"+ age + "', '" + language + "', '" + genre + "')");
+        modifyDB("INSERT INTO persoon$ (Id, Leeftijd, Taal, Genre) VALUES('"+ (Float.parseFloat(str) + 1)+ "', '"+ age + "', '" + language + "', '" + genre + "')");
         System.out.println("Inserted " + age + " " + language + " " + genre);
+    }
+
+    //-----------------------------------------
+    public void removeIdFromDB(float id){
+        modifyDB("DELETE FROM persoon$ WHERE Id = '" + id +"'");
     }
 
     //-----------------------------------------------------------------------------------
     private ArrayList<Object> getResultSetOfQuery(String query){
         ArrayList<Object> datalist = new ArrayList<>();
         try {
+            conn = new connector().getCon();
+
+            this.st = conn.createStatement();
             this.rs = this.st.executeQuery(query);
 
             while (rs.next()){
@@ -132,10 +139,12 @@ public class dataBaseData {
         }
         return datalist;
     }
-
     //-----------------------------------------
-    private void setInsertIntoDB(String insert){
+    private void modifyDB(String insert){
         try {
+            conn = new connector().getCon();
+
+            this.st = conn.createStatement();
             this.st.execute(insert);
         }catch (Exception e){
             e.printStackTrace();

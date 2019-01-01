@@ -47,6 +47,7 @@ public class Eventlisteners implements ActionListener {
                 break;
         }
     }
+
     private void insertDataintoDb(){
         System.out.println("shoving that good shit into the database");
         if (!this.age.isEmpty() && !this.language.isEmpty() && !this.genre.isEmpty()){
@@ -251,17 +252,15 @@ public class Eventlisteners implements ActionListener {
 
     //-----------------------------------------------
     public void actionJcomboboxACCLang(ItemEvent e, Container container) {
-        data = new dataBaseData();
         this.cont = container;
-
         this.language = String.valueOf(e.getItem());
     }
 
     //-----------------------------------------------
     public void actionJcomboboxACCGenre(ItemEvent e, Container container) {
-        data = new dataBaseData();
         this.cont = container;
-
         this.genre = String.valueOf(e.getItem());
     }
+
+    //----------------------------------------------------------------------------------------------------------------------
 }
