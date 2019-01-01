@@ -81,7 +81,6 @@ public class removeAccount implements allPagesInterface {
 
     //-------------------------------------------------------------------------------
     private Object holdLastClicked;
-    private Eventlisteners events = new Eventlisteners();
 
     private JComboBox getCombuButs(){
         JComboBox comboBox = new JComboBox();

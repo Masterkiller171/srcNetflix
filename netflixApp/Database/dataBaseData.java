@@ -1,5 +1,6 @@
 package netflixApp.Database;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import netflixApp.GUI.Interface;
 
 import java.sql.Connection;
@@ -108,15 +109,66 @@ public class dataBaseData {
     }
 
     //-----------------------------------------
-    public void uploadAccToDatabase(String age, String language, String genre){
+    public void uploadAccToDatabase(String age, String language, String genre, String serie, int season){
         String str = String.valueOf(getResultSetOfQuery("SELECT MAX(Id) FROM persoon$;"));
         str = str.replaceAll("\\[", "");
         str = str.replaceAll("]","");
 
-        modifyDB("INSERT INTO persoon$ (Id, Leeftijd, Taal, Genre) VALUES('"+ (Float.parseFloat(str) + 1)+ "', '"+ age + "', '" + language + "', '" + genre + "')");
-        System.out.println("Inserted " + age + " " + language + " " + genre);
+        ArrayList<String> allDataSeason = getRandomAfleveringTitleAndTime(serie, season);
+            modifyDB("INSERT INTO persoon$ (Id, Leeftijd, Taal, Genre) VALUES('" + (Float.parseFloat(str) + 1) + "', '" + age + "', '" + language + "', '" + genre + "')");
+            modifyDB("INSERT INTO seizoen$ (seizoenId, Id, Aflevering, Titel, Tijdsduur) VALUES('" + season + "', '" + (Float.parseFloat(str) + 1) + "', '" + allDataSeason.get(0) + "', '" + allDataSeason.get(1) + "', '" + allDataSeason.get(2) + "')");
+            System.out.println("Inserted " + age + " " + language + " " + genre + " " + serie + " " + season + " " + allDataSeason.get(0) + " " + allDataSeason.get(1) + " " + allDataSeason.get(2));
     }
 
+    private ArrayList<String> getRandomAfleveringTitleAndTime(String serie, int season){
+        ArrayList<String> Afleveringen = new ArrayList<>();
+        ArrayList<String> Titles = new ArrayList<>();
+        ArrayList<String> Times = new ArrayList<>();
+
+        ArrayList<String> AflTitlTim = new ArrayList<>();
+        int serieNum = 0;
+        switch (serie){
+            case "Sherlock":
+                serieNum = 1;
+            break;
+
+            case "Breaking Bad":
+                serieNum = 2;
+            break;
+
+            case "Fargo":
+                serieNum = 3;
+            break;
+        }
+
+         ArrayList<Object> objs =  getResultSetOfQuery("SELECT Aflevering FROM seizoen$ WHERE seizoenId =" + "( SELECT SeizoenID FROM seizoen_serie$ WHERE SerieID = '"+ serieNum +"' AND Seizoen = '" + season + "');");
+        for (Object obj : objs) {
+            Afleveringen.add(String.valueOf(obj));
+        }
+
+
+        objs = getResultSetOfQuery("SELECT Titel FROM seizoen$ WHERE seizoenId =" + "( SELECT SeizoenID FROM seizoen_serie$ WHERE SerieID = '"+ serieNum +"' AND Seizoen = '" + season + "');");
+        for (Object obj : objs) {
+            Titles.add(String.valueOf(obj));
+        }
+
+
+       objs = getResultSetOfQuery("SELECT Tijdsduur FROM seizoen$ WHERE seizoenId =" + "( SELECT SeizoenID FROM seizoen_serie$ WHERE SerieID = '"+ serieNum +"' AND Seizoen = '" + season + "');");
+        for (Object obj : objs) {
+            Times.add(String.valueOf(obj));
+        }
+        int randoNum = (int)(Math.random() * (Afleveringen.size() - 1));
+
+        String afl = Afleveringen.get(randoNum);
+        String tit = Titles.get(randoNum);
+        String tim = Times.get(randoNum);
+
+        AflTitlTim.add(afl);
+        AflTitlTim.add(tit);
+        AflTitlTim.add(tim);
+
+        return AflTitlTim;
+    }
     //-----------------------------------------
     public void removeIdFromDB(float id){
         modifyDB("DELETE FROM persoon$ WHERE Id = '" + id +"'");

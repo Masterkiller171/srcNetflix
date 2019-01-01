@@ -51,7 +51,7 @@ public class Eventlisteners implements ActionListener {
     private void insertDataintoDb(){
         System.out.println("shoving that good shit into the database");
         if (!this.age.isEmpty() && !this.language.isEmpty() && !this.genre.isEmpty()){
-            data.uploadAccToDatabase(age,language,genre);
+            data.uploadAccToDatabase(age,language,genre, serie, season);
         }
     }
 
@@ -229,6 +229,8 @@ public class Eventlisteners implements ActionListener {
     private String age;
     private String language;
     private String genre;
+    private String serie;
+    private int season;
 
     public void actionJcomboboxACCAge(ItemEvent e, Container container){
         data = new dataBaseData();
@@ -262,5 +264,18 @@ public class Eventlisteners implements ActionListener {
         this.genre = String.valueOf(e.getItem());
     }
 
+    //-----------------------------------------------
+    public void actionJcomboboxACCSerie(ItemEvent e, Container container) {
+        this.cont = container;
+        this.serie = String.valueOf(e.getItem());
+    }
+
+    //-----------------------------------------------
+    public void actionJcomboboxACCSeason(ItemEvent e, Container container) {
+        this.cont = container;
+        String str = String.valueOf(e.getItem());
+        str = str.replaceAll("\\D+","");
+        this.season = Integer.parseInt(str);
+    }
     //----------------------------------------------------------------------------------------------------------------------
 }
