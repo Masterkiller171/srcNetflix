@@ -235,20 +235,24 @@ public class Eventlisteners implements ActionListener {
     public void actionJcomboboxACCAge(ItemEvent e, Container container){
         data = new dataBaseData();
         this.cont = container;
-        int age = Integer.parseInt(String.valueOf(e.getItem()).replaceAll("\\D+", ""));
+        try {
+            int age = Integer.parseInt(String.valueOf(e.getItem()).replaceAll("\\D+", ""));
 
-        if (age < 12){
-            System.out.println("6 jaar of ouder");
-            this.age = "6 jaar of ouder";
-        }else if(age >= 12 && age < 16){
-            System.out.println("12 jaar of ouder");
-            this.age = "12 jaar of ouder";
-        }else if (age >= 16 && age < 18){
-            System.out.println("16 jaar of ouder");
-            this.age = "16 jaar of ouder";
-        }else{
-            System.out.println("18 jaar of ouder");
-            this.age = "18 jaar of ouder";
+            if (age < 12) {
+                System.out.println("6 jaar of ouder");
+                this.age = "6 jaar of ouder";
+            } else if (age >= 12 && age < 16) {
+                System.out.println("12 jaar of ouder");
+                this.age = "12 jaar of ouder";
+            } else if (age >= 16 && age < 18) {
+                System.out.println("16 jaar of ouder");
+                this.age = "16 jaar of ouder";
+            } else {
+                System.out.println("18 jaar of ouder");
+                this.age = "18 jaar of ouder";
+            }
+        }catch (NumberFormatException event){
+            event.getCause();
         }
     }
 
@@ -275,7 +279,12 @@ public class Eventlisteners implements ActionListener {
         this.cont = container;
         String str = String.valueOf(e.getItem());
         str = str.replaceAll("\\D+","");
-        this.season = Integer.parseInt(str);
+        try {
+            this.season = Integer.parseInt(str);
+        }catch (NumberFormatException event){
+            event.getCause();
+        }
+
     }
     //----------------------------------------------------------------------------------------------------------------------
 }

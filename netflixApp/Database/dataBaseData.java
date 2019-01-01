@@ -1,8 +1,5 @@
 package netflixApp.Database;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import netflixApp.GUI.Interface;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -131,11 +128,9 @@ public class dataBaseData {
             case "Sherlock":
                 serieNum = 1;
             break;
-
             case "Breaking Bad":
                 serieNum = 2;
             break;
-
             case "Fargo":
                 serieNum = 3;
             break;
