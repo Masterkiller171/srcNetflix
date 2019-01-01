@@ -1,5 +1,6 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
+import netflixApp.Database.dataBaseData;
 import netflixApp.GUI.EventListerners.Eventlisteners;
 
 import javax.swing.*;
@@ -73,19 +74,29 @@ public class newAccount implements allPagesInterface{
             panol.add(getAgeBox());
             panol.add(getLangBox());
             panol.add(getGenreBox());
+            panol.add(new JPanel());
+
+            panol.add(getSerie());
+            panol.add(getSeason());
+
+            JLabel randoMessage = new JLabel();
+            randoMessage.setText("'aflevering' And the title will be randomly choosen based on the chosen options");
+            randoMessage.setHorizontalAlignment(SwingConstants.CENTER);
+            randoMessage.setForeground(Color.red);
+            panol.add(randoMessage);
 
             JButton finished = new JButton("finished!");
             finished.addActionListener(events);
             finished.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
 
-
             panol.add(finished);
         return panol;
     }
 
+    //--------------------------------------
     private JComboBox getAgeBox(){
         JComboBox choiceBoxAge = new JComboBox();
-        choiceBoxAge.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+        choiceBoxAge = getSizedCombobox(choiceBoxAge);
 
         choiceBoxAge.addItem("What is your age?");
 
@@ -110,9 +121,10 @@ public class newAccount implements allPagesInterface{
         return choiceBoxAge;
     }
 
+    //--------------------------------------
     private JComboBox getLangBox(){
         JComboBox choiceBoxLang = new JComboBox();
-        choiceBoxLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+        choiceBoxLang = getSizedCombobox(choiceBoxLang);
 
         choiceBoxLang.addItem("What is your preferred language?");
         choiceBoxLang.addItem("Mandarin");
@@ -138,9 +150,10 @@ public class newAccount implements allPagesInterface{
         return choiceBoxLang;
     }
 
+    //--------------------------------------
     private JComboBox getGenreBox(){
         JComboBox choiceGenreLang = new JComboBox();
-        choiceGenreLang.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+        choiceGenreLang = getSizedCombobox(choiceGenreLang);
 
         choiceGenreLang.addItem("What is your favourite genre?");
         choiceGenreLang.addItem("Spanning");
@@ -166,4 +179,64 @@ public class newAccount implements allPagesInterface{
         return choiceGenreLang;
     }
 
+    //-------------------------------------------------
+    private JComboBox getSerie(){
+        JComboBox choiceSerie = new JComboBox();
+        choiceSerie = getSizedCombobox(choiceSerie);
+
+        choiceSerie.addItem("What serie are you currently watching?");
+        choiceSerie.addItem("Breaking Bad");
+        choiceSerie.addItem("Fargo");
+        choiceSerie.addItem("Sherlock");
+
+        choiceSerie.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object item = e.getItem();
+                if (!item.equals(holdLastClicked)) {
+                    holdLastClicked = item;
+                    events.actionJcomboboxACCSerie(e, cont);
+                }else{
+                    holdLastClicked = item;
+                }
+            }
+        });
+
+        return choiceSerie;
+    }
+
+    //--------------------------------------
+    private JComboBox getSeason(){
+        JComboBox choiceSeason = new JComboBox();
+        choiceSeason = getSizedCombobox(choiceSeason);
+
+        choiceSeason.addItem("What season of are you currently watching?");
+
+        for (int i = 1; i <= 2; i++) {
+            choiceSeason.addItem("Season: " + i);
+        }
+
+        choiceSeason.addItem("Season: 3 (only aviable for the Sherlock serie)");
+
+        choiceSeason.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object item = e.getItem();
+                if (!item.equals(holdLastClicked)) {
+                    holdLastClicked = item;
+                    events.actionJcomboboxACCSeason(e, cont);
+                }else{
+                    holdLastClicked = item;
+                }
+            }
+        });
+
+        return choiceSeason;
+    }
+
+    //--------------------------------------
+    private JComboBox getSizedCombobox(JComboBox box){
+        box.setPreferredSize(new Dimension((int)(sWidth / 3.5), 30));
+        return box;
+    }
 }
