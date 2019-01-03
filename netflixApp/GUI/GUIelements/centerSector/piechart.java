@@ -68,9 +68,7 @@ public class piechart implements allPagesInterface {
       events = new Eventlisteners();
       comboBox.setPreferredSize(new Dimension((int)(width / 1.5),50));
 
-      comboBox.addItemListener(new ItemListener() {
-          @Override
-          public void itemStateChanged(ItemEvent e) {
+      comboBox.addItemListener(e -> {
               Object item = e.getItem();
               if (!item.equals(holdLastClicked)) {
                   holdLastClicked = item;
@@ -78,7 +76,6 @@ public class piechart implements allPagesInterface {
               }else{
                   holdLastClicked = item;
               }
-          }
       });
 
       comboBox.addItem("Choose an option");

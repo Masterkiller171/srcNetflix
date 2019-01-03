@@ -218,9 +218,7 @@ public class newAccount implements allPagesInterface{
 
         choiceSeason.addItem("Season: 3 (only aviable for the Sherlock serie)");
 
-        choiceSeason.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        choiceSeason.addItemListener(e ->{
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     holdLastClicked = item;
@@ -228,7 +226,6 @@ public class newAccount implements allPagesInterface{
                 }else{
                     holdLastClicked = item;
                 }
-            }
         });
 
         return choiceSeason;

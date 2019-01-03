@@ -80,7 +80,8 @@ public class GUI {
         JPanel panel = new JPanel();
         panel.setBorder(new EmptyBorder(5,5,5,5));
 
-        panel.setBackground(Color.lightGray);
+        //Background colour of the west side menu
+        panel.setBackground(Color.gray);
 
         //Grid layout so the buttons aligns vertically
         GridLayout grid = new GridLayout(4,1,5,10);

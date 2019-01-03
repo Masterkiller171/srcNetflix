@@ -25,8 +25,10 @@ public class Interface implements Runnable{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createElements(frame.getContentPane(), null,null);
 
+
         frame.pack();
         frame.setVisible(true);
+        System.out.println("Width: " + frame.getSize().width + " height: " +frame.getSize().height);
     }
 
 

@@ -92,15 +92,12 @@ public class removeAccount implements allPagesInterface {
         }
 
 
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        comboBox.addItemListener(e -> {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     holdLastClicked = item;
                 }else{
                     holdLastClicked = item;
-                }
             }
         });
 
@@ -114,12 +111,7 @@ public class removeAccount implements allPagesInterface {
         but.setPreferredSize(new Dimension((int)(width / 3.5),50));
 
         but.setText("Choose this id to be removed!");
-        but.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                d.removeIdFromDB(Float.parseFloat(String.valueOf(holdLastClicked)));
-            }
-        });
+        but.addActionListener(e -> d.removeIdFromDB(Float.parseFloat(String.valueOf(holdLastClicked))));
         return but;
     }
 }

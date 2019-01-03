@@ -135,16 +135,13 @@ public class mainPage implements allPagesInterface{
         comboBox.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),50));
 
 
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        comboBox.addItemListener(e -> {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     events.actionJComboxMain(e,cont);
                     holdLastClicked = item;
                 }else{
                     holdLastClicked = item;
-                }
             }
         });
 
