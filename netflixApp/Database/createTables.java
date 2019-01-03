@@ -21,7 +21,7 @@ public class createTables {
     }
 
     private void createDB(Statement state){
-        String condition = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES" + " WHERE TABLE_NAME = 'film$')  BEGIN";
+        String condition = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES" + " WHERE TABLE_NAME = 'film')  BEGIN";
         String film = " CREATE TABLE [dbo].[film$](" + " [film] [nvarchar](255) NULL," + " [Leeftijd] [nvarchar](255) NULL,"
                 + " [Taal] [nvarchar](255) NULL,"
                 + " [Tijdsduur] [nvarchar](255) NULL" +

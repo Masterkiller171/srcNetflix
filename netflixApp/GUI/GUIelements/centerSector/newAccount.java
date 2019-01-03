@@ -20,7 +20,7 @@ public class newAccount implements allPagesInterface{
         this.ExplainTxt = "test";
     }
 
-
+    //Builds the center sector for this class and returns the JPanel which contains every component in this class
     @Override
     public JPanel getCenterSector() {
         JPanel panel = new JPanel();
@@ -39,7 +39,7 @@ public class newAccount implements allPagesInterface{
 
     @Override
     public void setUpdataShowText(ArrayList listWithData, int height) {
-
+        //No data
     }
 
     @Override
@@ -47,6 +47,8 @@ public class newAccount implements allPagesInterface{
         this.cont = container;
     }
 
+    //Creates the the info text box which shows some data related to the shown data
+    @Override
     public JPanel getInfoText(){
         JPanel panel = new JPanel();
 
@@ -55,7 +57,7 @@ public class newAccount implements allPagesInterface{
         Insets insets = new Insets(5,20,5,5);
 
         text.setMargin(insets);
-        text.setPreferredSize(new Dimension((int)(sWidth / 1.5),this.explainHeight));
+        text.setPreferredSize(new Dimension((int)(sWidth / 1.5), this.explainHeight));
         text.setText(this.ExplainTxt);
         text.setEditable(false);
         panel.add(text);
@@ -65,6 +67,7 @@ public class newAccount implements allPagesInterface{
     }
 
     //--------------------------------------------------------------------
+    //The getform is the method which constructs all of the JComboBox elements into a JPanel
     private Object holdLastClicked;
     private Eventlisteners events;
     private JPanel getForm(JPanel panol){
@@ -94,6 +97,7 @@ public class newAccount implements allPagesInterface{
     }
 
     //--------------------------------------
+    //Sets up the age Combo box
     private JComboBox getAgeBox(){
         JComboBox choiceBoxAge = new JComboBox();
         choiceBoxAge = getSizedCombobox(choiceBoxAge);
@@ -106,9 +110,7 @@ public class newAccount implements allPagesInterface{
 
         choiceBoxAge.addItem("18 years or older");
 
-        choiceBoxAge.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        choiceBoxAge.addItemListener(e -> {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     holdLastClicked = item;
@@ -116,12 +118,12 @@ public class newAccount implements allPagesInterface{
                 }else{
                     holdLastClicked = item;
                 }
-            }
         });
         return choiceBoxAge;
     }
 
     //--------------------------------------
+    //Sets up the language Combo box
     private JComboBox getLangBox(){
         JComboBox choiceBoxLang = new JComboBox();
         choiceBoxLang = getSizedCombobox(choiceBoxLang);
@@ -135,9 +137,7 @@ public class newAccount implements allPagesInterface{
         choiceBoxLang.addItem("German");
 
 
-        choiceBoxLang.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        choiceBoxLang.addItemListener(e ->  {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     holdLastClicked = item;
@@ -145,12 +145,12 @@ public class newAccount implements allPagesInterface{
                 }else{
                     holdLastClicked = item;
                 }
-            }
         });
         return choiceBoxLang;
     }
 
     //--------------------------------------
+    //Sets up the genre Combo box
     private JComboBox getGenreBox(){
         JComboBox choiceGenreLang = new JComboBox();
         choiceGenreLang = getSizedCombobox(choiceGenreLang);
@@ -164,9 +164,7 @@ public class newAccount implements allPagesInterface{
         choiceGenreLang.addItem("Drama");
 
 
-        choiceGenreLang.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        choiceGenreLang.addItemListener(e -> {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     holdLastClicked = item;
@@ -174,12 +172,12 @@ public class newAccount implements allPagesInterface{
                 }else{
                     holdLastClicked = item;
                 }
-            }
         });
         return choiceGenreLang;
     }
 
     //-------------------------------------------------
+    //Sets up the serie Combo box
     private JComboBox getSerie(){
         JComboBox choiceSerie = new JComboBox();
         choiceSerie = getSizedCombobox(choiceSerie);
@@ -189,9 +187,7 @@ public class newAccount implements allPagesInterface{
         choiceSerie.addItem("Fargo");
         choiceSerie.addItem("Sherlock");
 
-        choiceSerie.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
+        choiceSerie.addItemListener(e ->  {
                 Object item = e.getItem();
                 if (!item.equals(holdLastClicked)) {
                     holdLastClicked = item;
@@ -199,13 +195,13 @@ public class newAccount implements allPagesInterface{
                 }else{
                     holdLastClicked = item;
                 }
-            }
         });
 
         return choiceSerie;
     }
 
     //--------------------------------------
+    //Sets up the season Combo box
     private JComboBox getSeason(){
         JComboBox choiceSeason = new JComboBox();
         choiceSeason = getSizedCombobox(choiceSeason);

@@ -223,10 +223,6 @@ public class GUI {
         return pane;
     }
 
-    public Layout getLayoutType() {
-        return layoutType;
-    }
-
     //Returning the constructed layout to the interface class
     public Container getUi() {
         return createLayout(layoutType);
@@ -246,6 +242,7 @@ public class GUI {
         }
     }
 
+    //Will set the group names for the piechart page
     public void setGroupNames(ArrayList<String> groupNames) {
         this.groupNames = groupNames;
     }

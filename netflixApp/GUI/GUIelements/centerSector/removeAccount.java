@@ -80,8 +80,9 @@ public class removeAccount implements allPagesInterface {
     }
 
     //-------------------------------------------------------------------------------
+    //Creates the combo button that will show all of the ids in the database and amy be removed when clicked
+    //on the item and then on the remove this id button
     private Object holdLastClicked;
-
     private JComboBox getCombuButs(){
         JComboBox comboBox = new JComboBox();
         comboBox.setPreferredSize(new Dimension((int)(width / 3.5),50));
@@ -90,7 +91,6 @@ public class removeAccount implements allPagesInterface {
         for (Object allId : data.getAllIds()) {
             comboBox.addItem(allId);
         }
-
 
         comboBox.addItemListener(e -> {
                 Object item = e.getItem();
@@ -105,6 +105,7 @@ public class removeAccount implements allPagesInterface {
         return comboBox;
     }
 
+    //Choose button which removes the chosen id
     private JButton getChooseBut(){
         JButton but = new JButton();
         dataBaseData d = new dataBaseData();

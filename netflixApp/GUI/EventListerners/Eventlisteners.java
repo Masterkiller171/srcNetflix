@@ -148,6 +148,10 @@ public class Eventlisteners implements ActionListener {
             case "show genre distribution":
                 createGenreDistribution();
             break;
+
+            case "show different letters in series":
+                createShowDifferentCharacters();
+            break;
         }
     }
 
@@ -158,11 +162,12 @@ public class Eventlisteners implements ActionListener {
         this.groupValue.add(stripObjectToInt(data.getCountGenresDetective()));
         this.groupValue.add(stripObjectToInt(data.getCountGenresSpanning()));
 
-        this.groupNames.add("Series met genre detective bevatten: ");
-        this.groupNames.add("Series met genre spanning bevatten: ");
+        this.groupNames.add("Series met genre detective: ");
+        this.groupNames.add("Series met genre spanning: ");
 
         actionComboxPIE(groupValue, groupNames);
     }
+
 
     private void createShowSimilar(){
         this.groupValue = new ArrayList<>();
@@ -209,6 +214,25 @@ public class Eventlisteners implements ActionListener {
         actionComboxPIE(groupValue, groupNames);
     }
 
+    private void createShowDifferentCharacters(){
+        this.groupValue = new ArrayList<>();
+        this.groupNames  = new ArrayList<>();
+        String allChars = "abcdefghiklmnopqrstuvwxyz";
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                groupValue.add(stripObjectToInt(data.getLettersFromSerie(allChars.charAt(i))));
+                this.groupNames.add(allChars.charAt(i) + "");
+            }catch (StringIndexOutOfBoundsException e){
+                e.getCause();
+                i--;
+            }
+
+        }
+
+        actionComboxPIE(groupValue, groupNames);
+    }
+    //--------------------------------------------
     //Takes an object as parameter and converts it into an int
     private int stripObjectToInt(Object obj){
         String str = String.valueOf(obj);

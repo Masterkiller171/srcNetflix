@@ -8,8 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class piechart implements allPagesInterface {
@@ -39,6 +42,13 @@ public class piechart implements allPagesInterface {
         panel.add(getInfoText());
         panel.add(createLegend());
         panel.add(comboBoxPie());
+
+        JLabel lb = new JLabel();
+        lb.setText("'show different letters in series' will take a while because the host is slow (takes about 8 seconds)");
+        lb.setPreferredSize(new Dimension((int)(width / 1.5), 50));
+        lb.setHorizontalAlignment(SwingConstants.CENTER);
+        lb.setForeground(Color.red);
+        panel.add(lb);
 
         return panel;
     }
@@ -83,6 +93,7 @@ public class piechart implements allPagesInterface {
       comboBox.addItem("show age distribution");
       comboBox.addItem("show series that are similar");
       comboBox.addItem("show genre distribution");
+      comboBox.addItem("show different letters in series");
 
       return comboBox;
     }
@@ -110,17 +121,24 @@ public class piechart implements allPagesInterface {
         createPieChart pie = new createPieChart(this.pieValues, this.colourAndPos);
         GridLayout grid = new GridLayout(1,2);
         panel.setLayout(grid);
-        panel.setPreferredSize(new Dimension((width/3), 200));
+        panel.setPreferredSize(new Dimension((width / 3), 200));
 
         JPanel legend = new JPanel();
         GridLayout gridL = new GridLayout(10,1);
         legend.setLayout(gridL);
 
         if (this.pieValues != null) {
+            DecimalFormat nf = new DecimalFormat("##.#"); //Formatting the percentage so it will only show 1 decimal digit
+
+            float sumOfAllVals = 0;
+            for (Integer value : this.pieValues) {
+                sumOfAllVals += value;
+            }
+
             for (int i = 0; i < this.pieValues.size(); i++) {
                 JTextPane newLb = new JTextPane();
                 newLb.setBackground(colourAndPos.get(i));
-                newLb.setText(this.groupNames.get(i) + ":  " + this.pieValues.get(i));
+                newLb.setText(this.groupNames.get(i) + ":  " + this.pieValues.get(i) + ", perc: " + nf.format(((float)this.pieValues.get(i) / sumOfAllVals) * 100) + " %");
 
                 addLegendAttributes(newLb);
                 legend.add(newLb);
@@ -163,12 +181,12 @@ public class piechart implements allPagesInterface {
     private Color getColour(int pos){
         Color colour = null;
         switch (pos){
-            case 0: colour = Color.blue; break;
-            case 1: colour = Color.red; break;
-            case 2: colour = new Color(128,0,128); break;
+            case 0: colour = new Color(109, 255, 243); break;
+            case 1: colour = new Color(220, 147, 141); break;
+            case 2: colour = new Color(243, 168, 255); break;
             case 3: colour = Color.GREEN; break;
-            case 4: colour = Color.PINK; break;
-            case 5: colour = Color.BLACK; break;
+            case 4: colour = new Color(165, 171, 255); break;
+            case 5: colour = new Color(255, 239, 117); break;
             case 6: colour = Color.MAGENTA; break;
             case 7: colour = Color.YELLOW; break;
             case 8: colour = Color.CYAN; break;
@@ -181,15 +199,5 @@ public class piechart implements allPagesInterface {
 
         return colour;
     }
-
-    Map<Integer, Color> getColourAndPos() {
-        return this.colourAndPos;
-    }
-
-    //Getter for the createpiechart class
-    ArrayList<Integer> getPieValues(){
-        return this.pieValues;
-    }
-
 }
 

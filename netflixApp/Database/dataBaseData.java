@@ -105,6 +105,11 @@ public class dataBaseData {
     }
 
     //-----------------------------------------
+    public ArrayList<Object> getLettersFromSerie(char character){
+        return getResultSetOfQuery("SELECT COUNT(Titel) FROM seizoen WHERE Titel LIKE '%" + character + "%'");
+    }
+
+    //-----------------------------------------
     public void uploadAccToDatabase(String age, String language, String genre, String serie, int season){
         String str = String.valueOf(getResultSetOfQuery("SELECT MAX(Id) FROM persoon;"));
         str = str.replaceAll("\\[", "");
