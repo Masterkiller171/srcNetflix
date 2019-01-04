@@ -43,13 +43,6 @@ public class piechart implements allPagesInterface {
         panel.add(createLegend());
         panel.add(comboBoxPie());
 
-        JLabel lb = new JLabel();
-        lb.setText("'show different letters in series' will take a while because the host is slow (takes about 8 seconds)");
-        lb.setPreferredSize(new Dimension((int)(width / 1.5), 50));
-        lb.setHorizontalAlignment(SwingConstants.CENTER);
-        lb.setForeground(Color.red);
-        panel.add(lb);
-
         return panel;
     }
 

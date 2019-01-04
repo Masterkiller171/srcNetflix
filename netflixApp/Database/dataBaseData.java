@@ -65,38 +65,18 @@ public class dataBaseData {
     }
 
     //-----------------------------------------
-    public  ArrayList<Object> getCount6Jaar(){
-        return getResultSetOfQuery("SELECT  COUNT(Leeftijd) " + "FROM (   SELECT Leeftijd FROM persoon WHERE Leeftijd = '6 jaar en ouder'" + " UNION all" + " SELECT Leeftijd FROM film WHERE Leeftijd = '6 jaar en ouder') leefTijd;");
-    }
-
-    public  ArrayList<Object> getCount12Jaar(){
-        return getResultSetOfQuery("SELECT  COUNT(Leeftijd) " + "FROM (   SELECT Leeftijd FROM persoon WHERE Leeftijd = '12 jaar en ouder'" + " UNION all" + " SELECT Leeftijd FROM film WHERE Leeftijd = '12 jaar en ouder') leefTijd;");
-    }
-
-    public  ArrayList<Object> getCount16Jaar(){
-        return getResultSetOfQuery("SELECT  COUNT(Leeftijd) " + "FROM (   SELECT Leeftijd FROM persoon WHERE Leeftijd = '16 jaar en ouder'" + " UNION all" + " SELECT Leeftijd FROM film WHERE Leeftijd = '16 jaar en ouder') leefTijd;");
-    }
-
-    public  ArrayList<Object> getCount18Jaar(){
-        return getResultSetOfQuery("SELECT  COUNT(Leeftijd) " + "FROM (   SELECT Leeftijd FROM persoon WHERE Leeftijd = '18 jaar en ouder'" + " UNION all" + " SELECT Leeftijd FROM film WHERE Leeftijd = '18 jaar en ouder') leefTijd;");
+    public  ArrayList<Object> getAgeYears(){
+        return getResultSetOfQuery("SELECT  Leeftijd " + "FROM (   SELECT Leeftijd FROM persoon" + " UNION all" + " SELECT Leeftijd FROM film ) leefTijd;");
     }
 
     //----------------------------------------
-    public ArrayList<Object> getCountLijktOpFargo(){
-        return getResultSetOfQuery("SELECT COUNT([lijkt een beetje op]) FROM persoon WHERE [lijkt een beetje op] = 'Fargo';");
-    }
-
-    public ArrayList<Object> getCountLijktOpBreakingBad(){
-        return getResultSetOfQuery("SELECT COUNT([lijkt een beetje op]) FROM persoon WHERE [lijkt een beetje op] = 'Breaking Bad';");
+    public ArrayList<Object> getLijktOp(){
+        return getResultSetOfQuery("SELECT [lijkt een beetje op] FROM persoon");
     }
 
     //-----------------------------------------
-    public ArrayList<Object> getCountGenresDetective(){
-        return getResultSetOfQuery("SELECT COUNT(Genre) FROM persoon WHERE Genre = 'Detective';");
-    }
-
-    public ArrayList<Object> getCountGenresSpanning(){
-        return getResultSetOfQuery("SELECT COUNT(Genre) FROM persoon WHERE Genre = 'Spanning';");
+    public ArrayList<Object> getGenres(){
+        return getResultSetOfQuery("SELECT Genre FROM persoon");
     }
 
     //-----------------------------------------
@@ -105,8 +85,8 @@ public class dataBaseData {
     }
 
     //-----------------------------------------
-    public ArrayList<Object> getLettersFromSerie(char character){
-        return getResultSetOfQuery("SELECT COUNT(Titel) FROM seizoen WHERE Titel LIKE '%" + character + "%'");
+    public ArrayList<Object> getLettersFromSerie(){
+        return getResultSetOfQuery("SELECT Titel FROM seizoen");
     }
 
     //-----------------------------------------

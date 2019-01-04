@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Eventlisteners implements ActionListener {
     private Container cont;
@@ -125,6 +127,7 @@ public class Eventlisteners implements ActionListener {
     }
 
     //--------------------------------------------------------------------------------------------------------------
+    //Rule for optimization: every method may only request data from database once
     private ArrayList<Integer> groupValue;
     private ArrayList<String> groupNames;
 
@@ -158,12 +161,27 @@ public class Eventlisteners implements ActionListener {
     private void createGenreDistribution(){
         this.groupValue = new ArrayList<>();
         this.groupNames = new ArrayList<>();
+        ArrayList<Object> genres = data.getGenres();
 
-        this.groupValue.add(stripObjectToInt(data.getCountGenresDetective()));
-        this.groupValue.add(stripObjectToInt(data.getCountGenresSpanning()));
+        Map<String, Integer> genreVal = new HashMap<>();
+        for (Object dataGenre : genres) {
+            if (!genreVal.keySet().contains(dataGenre.toString())) {
+                genreVal.put(dataGenre.toString(), 0);
+                groupNames.add(dataGenre.toString());
+            }
+        }
 
-        this.groupNames.add("Series met genre detective: ");
-        this.groupNames.add("Series met genre spanning: ");
+        for (Object o : genres) {
+            for (int i = 0; i < genreVal.size(); i++) {
+                if (groupNames.get(i).equals(o.toString())){
+                    genreVal.replace(groupNames.get(i), (genreVal.get(groupNames.get(i)) + 1));
+                }
+            }
+        }
+
+        for (int i = 0; i < genreVal.size(); i++) {
+            groupValue.add(genreVal.get(groupNames.get(i)));
+        }
 
         actionComboxPIE(groupValue, groupNames);
     }
@@ -173,9 +191,18 @@ public class Eventlisteners implements ActionListener {
         this.groupValue = new ArrayList<>();
         this.groupNames  = new ArrayList<>();
 
-        this.groupValue.add(stripObjectToInt(data.getCountLijktOpFargo()));
-        this.groupValue.add(stripObjectToInt(data.getCountLijktOpBreakingBad()));
+        int sumFargo = 0;
+        int sumBad = 0;
+        for (Object o : data.getLijktOp()) {
+            if (o.toString().equals("Fargo")){
+                sumFargo++;
+            }else if (o.toString().equals("Breaking Bad")){
+                sumBad++;
+            }
+        }
 
+        this.groupValue.add(sumFargo);
+        this.groupValue.add(sumBad);
         this.groupNames.add("Series lijken op Fargo: ");
         this.groupNames.add("Series lijken op Breaking Bad: ");
 
@@ -185,16 +212,23 @@ public class Eventlisteners implements ActionListener {
     private void createShowAgeDist(){
         this.groupValue = new ArrayList<>();
         this.groupNames  = new ArrayList<>();
+        ArrayList<Object> datas = data.getAgeYears();
 
-        this.groupValue.add(stripObjectToInt(data.getCount6Jaar()));
-        this.groupValue.add(stripObjectToInt(data.getCount12Jaar()));
-        this.groupValue.add(stripObjectToInt(data.getCount16Jaar()));
-        this.groupValue.add(stripObjectToInt(data.getCount18Jaar()));
+        Map<String, Integer> ageYear = new HashMap<>();
+        for (Object year : datas) {
+            if (!ageYear.containsKey(year.toString())){
+                ageYear.put(year.toString(), 0);
+                groupNames.add(year.toString());
+            }
+        }
 
-        this.groupNames.add("6 jaar en ouder");
-        this.groupNames.add("12 jaar en ouder");
-        this.groupNames.add("16 jaar en ouder");
-        this.groupNames.add("18 jaar en ouder");
+        for (int i = 0; i < datas.size(); i++) {
+            ageYear.replace(datas.get(i).toString(), (ageYear.get(datas.get(i).toString()) + 1));
+        }
+
+        for (int i = 0; i < ageYear.size(); i++) {
+            groupValue.add(ageYear.get(groupNames.get(i)));
+        }
 
         actionComboxPIE(groupValue, groupNames);
     }
@@ -214,22 +248,45 @@ public class Eventlisteners implements ActionListener {
         actionComboxPIE(groupValue, groupNames);
     }
 
+    //This method generates a string with 10 random unique characters
+    //And Checks every title of each episode in the database and then counts them up if they match
+    //Finally it will return de map with 10 randomly chosen characters and the corresponding sums of how many times the
+    //Character has been counted
     private void createShowDifferentCharacters(){
         this.groupValue = new ArrayList<>();
         this.groupNames  = new ArrayList<>();
         String allChars = "abcdefghiklmnopqrstuvwxyz";
 
+        StringBuilder customCombo = new StringBuilder();
+        Map<Character,Integer> datlet = new HashMap<>();
         for (int i = 0; i < 10; i++) {
-            try {
-                groupValue.add(stripObjectToInt(data.getLettersFromSerie(allChars.charAt(i))));
-                this.groupNames.add(allChars.charAt(i) + "");
-            }catch (StringIndexOutOfBoundsException e){
-                e.getCause();
-                i--;
-            }
+             int rando = (int)(Math.random() * 25);
+                 while (true) {
+                     if (!customCombo.toString().contains(allChars.charAt(rando) + "")) {
+                         customCombo.append(allChars.charAt(rando));
+                         datlet.put(allChars.charAt(rando), 0);
+                         break;
+                     }else{
+                         rando = (int)(Math.random() * 25);
+                     }
+                 }
+             }
 
+
+        for (Object o : data.getLettersFromSerie()) {
+            for (int i = 0; i < o.toString().length(); i++) {
+                for (int j = 0; j < customCombo.toString().length(); j++) {
+                    if (o.toString().charAt(i) == customCombo.toString().charAt(j)){
+                        datlet.replace(customCombo.toString().charAt(j), (datlet.get(customCombo.toString().charAt(j)) + 1));
+                    }
+                }
+            }
         }
 
+        for (int i = 0; i < datlet.size(); i++) {
+            groupNames.add(customCombo.toString().charAt(i) + "");
+            groupValue.add(datlet.get(customCombo.toString().charAt(i)));
+        }
         actionComboxPIE(groupValue, groupNames);
     }
     //--------------------------------------------
@@ -264,16 +321,16 @@ public class Eventlisteners implements ActionListener {
 
             if (age < 12) {
                 System.out.println("6 jaar of ouder");
-                this.age = "6 jaar of ouder";
+                this.age = "6 jaar en ouder";
             } else if (age >= 12 && age < 16) {
                 System.out.println("12 jaar of ouder");
-                this.age = "12 jaar of ouder";
+                this.age = "12 jaar en ouder";
             } else if (age >= 16 && age < 18) {
                 System.out.println("16 jaar of ouder");
-                this.age = "16 jaar of ouder";
+                this.age = "16 jaar en ouder";
             } else {
                 System.out.println("18 jaar of ouder");
-                this.age = "18 jaar of ouder";
+                this.age = "18 jaar en ouder";
             }
         }catch (NumberFormatException event){
             event.getCause();
