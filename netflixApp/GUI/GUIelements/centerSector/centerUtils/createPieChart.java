@@ -1,4 +1,4 @@
-package netflixApp.GUI.GUIelements.centerSector;
+package netflixApp.GUI.GUIelements.centerSector.centerUtils;
 
 import javax.swing.*;
 import java.awt.*;

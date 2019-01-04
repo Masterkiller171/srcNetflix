@@ -1,14 +1,11 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
 import netflixApp.GUI.EventListerners.Eventlisteners;
+import netflixApp.GUI.GUIelements.textAttributes;
 import netflixApp.GUI.Interface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class mainPage implements allPagesInterface{
@@ -73,6 +70,9 @@ public class mainPage implements allPagesInterface{
         JTextPane text = new JTextPane();
         text.setBackground(Color.lightGray);
         Insets insets = new Insets(5,20,5,5);
+
+        textAttributes attrs = new textAttributes(text);
+        text = attrs.alignToCenterTextPane();
 
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),this.height));

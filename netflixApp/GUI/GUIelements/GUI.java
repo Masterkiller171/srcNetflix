@@ -9,9 +9,6 @@ import netflixApp.GUI.Interface;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,6 +20,7 @@ public class GUI {
     private ArrayList listWithData;
     private ArrayList<Integer> pieValues;
     private ArrayList<String> groupNames;
+    private String infoText;
 
     public GUI(Container container, Layout layoutType) {
         this.container = container;
@@ -59,7 +57,8 @@ public class GUI {
         textPane.setEditable(false);
 
         //Aligning text to middle of pane
-        alignToCenter(textPane);
+        textAttributes buts = new textAttributes(textPane);
+        textPane = buts.alignToCenterTextPane();
         textPane.setMargin(new Insets(20,0,0,0));
 
         textPane.setText("Netflix Statistics");
@@ -87,30 +86,39 @@ public class GUI {
         GridLayout grid = new GridLayout(4,1,5,10);
         panel.setLayout(grid);
 
+
         //First dummy button which returns the default center layout
         JButton returnPage = new JButton("Home");
+        textAttributes attributes = new textAttributes(returnPage);
+        returnPage = attributes.addAttributesButton();
         Eventlisteners event = new Eventlisteners(this.container);
         returnPage.addActionListener(event);
-        panel.add(addAttributes(returnPage));
+        panel.add(returnPage);
 
         //Second dummy button to reset the page
         JButton clearPage = new JButton("Remove Account");
+        attributes.setButs(clearPage);
+        clearPage = attributes.addAttributesButton();
         Eventlisteners e = new Eventlisteners(this.container);
         clearPage.addActionListener(e);
-        panel.add(addAttributes(clearPage));
+        panel.add(clearPage);
 
         //Second dummy button which returns the default center layout
         JButton piePage = new JButton("pie charts");
+        attributes.setButs(piePage);
+        piePage = attributes.addAttributesButton();
         Eventlisteners pieEvent = new Eventlisteners(this.container);
         piePage.addActionListener(pieEvent);
-        panel.add(addAttributes(piePage));
+        panel.add(piePage);
 
 
         //Second dummy button which returns the default center layout
         JButton newAcc = new JButton("create new account");
+        attributes.setButs(newAcc);
+        newAcc = attributes.addAttributesButton();
         Eventlisteners accEvent = new Eventlisteners(this.container);
         newAcc.addActionListener(accEvent);
-        panel.add(addAttributes(newAcc));
+        panel.add(newAcc);
 
 //        for (int i = 0; i < 6; i++) {
 //            panel.add(addAttributes(new JButton(randomWordGen(10))));
@@ -123,28 +131,20 @@ public class GUI {
 
     //Generates a random sequence of characters each time the method gets called and the parameter is the amount of characters
     //Only for testing purposes
-    private String randomWordGen(int characters){
-        String alpha = "abcdefghijklmnopqrstuvwxyz, ";
-        StringBuilder randomWord = new StringBuilder();
-
-        for (int i = 0; i < characters; i++) {
-            int rando = (int) (Math.random() * 27) + 1;
-            if (alpha.charAt(rando) == ','){
-                randomWord.append(alpha.charAt(rando) + " ");
-            }else{
-                randomWord.append(alpha.charAt(rando));
-            }
-        }
-        return randomWord.toString();
-    }
-
-    //All the attributes for the west sector button controls
-    private JButton addAttributes(JButton button){
-        button.setPreferredSize(new Dimension(200,50));
-        button.setFont(new Font("Arial", Font.BOLD, 15));
-        button.setBackground(Color.WHITE);
-        return button;
-    }
+//    private String randomWordGen(int characters){
+//        String alpha = "abcdefghijklmnopqrstuvwxyz, ";
+//        StringBuilder randomWord = new StringBuilder();
+//
+//        for (int i = 0; i < characters; i++) {
+//            int rando = (int) (Math.random() * 27) + 1;
+//            if (alpha.charAt(rando) == ','){
+//                randomWord.append(alpha.charAt(rando) + " ");
+//            }else{
+//                randomWord.append(alpha.charAt(rando));
+//            }
+//        }
+//        return randomWord.toString();
+//    }
 
     //Setting up the center section
     private JPanel setCenter(Layout lay){
@@ -154,7 +154,7 @@ public class GUI {
         //Choosing the layout for the center borderLayout which is based on the parameter input
         switch (lay){
             case MAIN:
-            page.setUpExplainText("Here comes the information regarding the data shown below\n\n" + randomWordGen(200),190);
+            page.setUpExplainText("\n\n" + this.infoText, 100);
             page.setUpdataShowText(this.listWithData, 190);
             page.setContainer(this.container);
             middlePanel = page.getCenterSector();
@@ -163,13 +163,14 @@ public class GUI {
 
             case REMOVEACC:
             removeAccount acc = new removeAccount();
+            acc.setUpExplainText("\n\n" + this.infoText, 100);
             middlePanel = acc.getCenterSector();
             middlePanel.setVisible(true);
             break;
 
             case PIECHART:
             piechart piechart = new piechart();
-            piechart.setUpExplainText(randomWordGen(200), 190);
+            piechart.setUpExplainText("\n\n" + this.infoText, 100);
             piechart.setContainer(this.container);
             piechart.setPieValues(this.pieValues);
             piechart.setGroupNames(this.groupNames);
@@ -179,7 +180,7 @@ public class GUI {
 
             case NEWACCOUNT:
                 newAccount newacc = new newAccount();
-                newacc.setUpExplainText(randomWordGen(300),190);
+                newacc.setUpExplainText("\n\n" + this.infoText, 100);
                 middlePanel = newacc.getCenterSector();
                 middlePanel.setVisible(true);
                 break;
@@ -197,7 +198,8 @@ public class GUI {
         JTextPane txtPane = new JTextPane();
 
         //Aligning text to center
-        alignToCenter(txtPane);
+        textAttributes buts = new textAttributes(txtPane);
+        txtPane = buts.alignToCenterTextPane();
 
         txtPane.setBackground(Color.lightGray);
         txtPane.setEditable(false);
@@ -213,16 +215,6 @@ public class GUI {
     }
 
     //---------------------------------------------------------------------------------------------------------
-    //Aligns the object JtextPane to the center of the X-Axis of the frame
-    private JTextPane alignToCenter(JTextPane pane){
-        StyledDocument doc = pane.getStyledDocument();
-        SimpleAttributeSet center = new SimpleAttributeSet();
-        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        doc.setParagraphAttributes(0, doc.getLength(), center, false);
-
-        return pane;
-    }
-
     //Returning the constructed layout to the interface class
     public Container getUi() {
         return createLayout(layoutType);
@@ -245,5 +237,9 @@ public class GUI {
     //Will set the group names for the piechart page
     public void setGroupNames(ArrayList<String> groupNames) {
         this.groupNames = groupNames;
+    }
+
+    public void setInfoText(String infoText) {
+        this.infoText = infoText;
     }
 }

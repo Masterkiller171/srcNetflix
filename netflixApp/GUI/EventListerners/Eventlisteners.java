@@ -17,10 +17,12 @@ public class Eventlisteners implements ActionListener {
     private Container cont;
     private Interface ui;
     private dataBaseData data;
+    private String infoText;
 
     //Constructor will receive the container object from the GUI class
     public Eventlisteners(Container cont) {
         this.cont = cont;
+        this.infoText = "test";
     }
 
     //Overloading the constructor so it doesn't need a parameter each time
@@ -33,7 +35,7 @@ public class Eventlisteners implements ActionListener {
         //Only for the west sector buttons
         switch (e.getActionCommand()){
             case "Remove Account":
-                resetPage();
+                removeAccountPage();
                 break;
             case "Home":
                 returnPage();
@@ -61,27 +63,31 @@ public class Eventlisteners implements ActionListener {
     private void newAcc() {
         ui = new Interface();
         ui.setLayoutType(Layout.NEWACCOUNT);
-        ui.createElements(cont,null,null);
+        this.infoText = "On this page you may create an account which then will be uploaded to the database.";
+        ui.createElements(cont,null,null,infoText);
     }
 
     //Will choose the layoutType 2 which is currently an empty center canvas
-    private void resetPage(){
+    private void removeAccountPage(){
         ui = new Interface();
         ui.setLayoutType(Layout.REMOVEACC);
-        ui.createElements(cont,null,null);
+        this.infoText = "On this page you may remove an account which then will be uploaded to the database.";
+        ui.createElements(cont,null,null,infoText);
     }
 
     //Will return the page to layoutType 1 which is the main page
     private void returnPage(){
         ui = new Interface();
         ui.setLayoutType(Layout.MAIN);
-        ui.createElements(cont,null,null);
+        this.infoText = "Welcome to our application!";
+        ui.createElements(cont,null,null,infoText);
     }
 
     private void pieCharts(){
         ui = new Interface();
         ui.setLayoutType(Layout.PIECHART);
-        ui.createElements(cont,null,null);
+        this.infoText = "On this page you may see a piechart which will show different groups, their values and the percentage of the total sum.";
+        ui.createElements(cont,null,null,infoText);
     }
 
     //---------------------------------------------------------------------------------------------------
@@ -91,30 +97,37 @@ public class Eventlisteners implements ActionListener {
         this.cont = container;
         switch (String.valueOf(e.getItem())){
             case "show all different series":
+                this.infoText = "All of the distinct series are shown below.";
                 actionCombox(data.getDistinctSeriesTitle());
             break;
 
             case "show top 15 distinct titles of episodes":
+                this.infoText = "The top 15 of all titles from episodes are shown below.";
                 actionCombox(data.getTop15EpisodesTitle());
             break;
 
             case "show all languages":
+                this.infoText = "All the distinct languages are shown below.";
                 actionCombox(data.getAllDistinctLanguages());
             break;
 
             case "show all genres":
+                this.infoText = "All the distinct genres are shown below.";
                 actionCombox(data.getAllDistinctGenres());
             break;
 
             case "show all ids who saw the sherlock serie":
+                this.infoText = "All of the ids who have seen the Sherlock serie are shown below.";
                 actionCombox(data.getAllIdsWhoSawSherlock());
             break;
 
             case "show all ids who saw the breaking bad serie":
+                this.infoText = "All of the ids who have seen the Breaking Bad serie are shown below.";
                 actionCombox(data.getAllIdsWhoSawBreakingBad());
             break;
 
             case "show all ids who saw the fargo serie":
+                this.infoText = "All of the ids who have seen the Fargo serie are shown below.";
                 actionCombox(data.getAllIdsWhoSawFargo());
             break;
         }
@@ -123,7 +136,7 @@ public class Eventlisteners implements ActionListener {
     private void actionCombox(ArrayList<Object> data){
         ui = new Interface();
         ui.setLayoutType(Layout.MAIN);
-        ui.createElements(this.cont, data,null);
+        ui.createElements(this.cont, data,null, infoText);
     }
 
     //--------------------------------------------------------------------------------------------------------------
@@ -137,22 +150,27 @@ public class Eventlisteners implements ActionListener {
         this.cont = container;
         switch (String.valueOf(e.getItem())){
             case "show series":
+                this.infoText = "All the series and their amount of viewers are shown in the piechart and in the legend.";
                 createShowSeries();
             break;
 
             case "show age distribution":
+                this.infoText = "All the ages and the amount of people who have selected that age are shown in the piechart and in the legend.";
                 createShowAgeDist();
             break;
 
             case "show series that are similar":
+                this.infoText = "All the series who are similar to another serie are shown in the piechart and in the legend.";
                 createShowSimilar();
             break;
 
             case "show genre distribution":
+                this.infoText = "All the genres and amount of series which have those genres are shown in the piechart and in the legend.";
                 createGenreDistribution();
             break;
 
             case "show different letters in series":
+                this.infoText = "10 randomly chosen letters chosen from the alphabet are shown below and how many times they show up in all of the titles of all episodes in the database.";
                 createShowDifferentCharacters();
             break;
         }
@@ -302,7 +320,7 @@ public class Eventlisteners implements ActionListener {
     private void actionComboxPIE(ArrayList<Integer> data, ArrayList<String> groupNames){
         ui = new Interface();
         ui.setLayoutType(Layout.PIECHART);
-        ui.createElements(this.cont, data,groupNames);
+        ui.createElements(this.cont, data,groupNames, infoText);
     }
 
     //----------------------------------------------------------------------------------------------------------------------

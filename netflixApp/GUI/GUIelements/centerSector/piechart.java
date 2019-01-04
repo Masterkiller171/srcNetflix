@@ -1,18 +1,15 @@
 package netflixApp.GUI.GUIelements.centerSector;
 
 import netflixApp.GUI.EventListerners.Eventlisteners;
+import netflixApp.GUI.GUIelements.centerSector.centerUtils.createPieChart;
+import netflixApp.GUI.GUIelements.textAttributes;
 import netflixApp.GUI.Interface;
-import org.omg.CORBA.INTERNAL;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class piechart implements allPagesInterface {
@@ -97,6 +94,9 @@ public class piechart implements allPagesInterface {
         JTextPane text = new JTextPane();
         text.setBackground(Color.lightGray);
         Insets insets = new Insets(5,20,5,5); //Wrapper for text HTML style
+
+        textAttributes attrs = new textAttributes(text);
+        text = attrs.alignToCenterTextPane();
 
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(width / 1.5),this.explainHeight));

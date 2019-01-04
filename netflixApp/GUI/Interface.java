@@ -2,7 +2,6 @@ package netflixApp.GUI;
 
 import netflixApp.GUI.GUIelements.GUI;
 import netflixApp.GUI.GUIelements.Layout;
-import netflixApp.GUI.GUIelements.centerSector.createPieChart;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +22,7 @@ public class Interface implements Runnable{
         //frame.setUndecorated(true);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        createElements(frame.getContentPane(), null,null);
+        createElements(frame.getContentPane(), null,null, "Welcome to our application!");
 
 
         frame.pack();
@@ -33,17 +32,19 @@ public class Interface implements Runnable{
 
 
     //Will determent which layoutType is chosen en adding the layout to the canvas
-    public Container createElements(Container container, ArrayList list, ArrayList<String> groupNames) {
+    public Container createElements(Container container, ArrayList list, ArrayList<String> groupNames, String infoText) {
             switch (this.layoutType) {
                 case MAIN:
                     container.removeAll();
                     GUI ui = new GUI(container, Layout.MAIN);
                     ui.setArrayWithData(list);
+                    ui.setInfoText(infoText);
                     return ui.getUi();
 
                 case REMOVEACC:
                     container.removeAll();
                     ui = new GUI(container, Layout.REMOVEACC);
+                    ui.setInfoText(infoText);
                     return ui.getUi();
 
                 case PIECHART:
@@ -51,11 +52,13 @@ public class Interface implements Runnable{
                    ui = new GUI(container, Layout.PIECHART);
                    ui.setPieValues(list);
                    ui.setGroupNames(groupNames);
+                    ui.setInfoText(infoText);
                    return ui.getUi();
 
                 case NEWACCOUNT:
                     container.removeAll();
                     ui = new GUI(container,Layout.NEWACCOUNT);
+                    ui.setInfoText(infoText);
                     return ui.getUi();
             }
         //When there is no valid layoutType it will throw this Exception
