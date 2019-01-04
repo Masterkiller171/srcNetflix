@@ -57,6 +57,7 @@ public class newAccount implements allPagesInterface{
         textAttributes attrs = new textAttributes(text);
         text = attrs.alignToCenterTextPane();
 
+        text.setFont(new Font("Arial", Font.BOLD, 18));
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(sWidth / 1.5), this.explainHeight));
         text.setText(this.ExplainTxt);
@@ -130,12 +131,15 @@ public class newAccount implements allPagesInterface{
         choiceBoxLang = getSizedCombobox(choiceBoxLang);
 
         choiceBoxLang.addItem("What is your preferred language?");
-        choiceBoxLang.addItem("Mandarin");
-        choiceBoxLang.addItem("Spanish");
-        choiceBoxLang.addItem("English");
-        choiceBoxLang.addItem("Dutch");
-        choiceBoxLang.addItem("French");
-        choiceBoxLang.addItem("German");
+        choiceBoxLang.addItem("Chinees");
+        choiceBoxLang.addItem("Engels-Amerikaans");
+        choiceBoxLang.addItem("Engels");
+        choiceBoxLang.addItem("Nederlands");
+        choiceBoxLang.addItem("Frans");
+        choiceBoxLang.addItem("Duits");
+        choiceBoxLang.addItem("Vlaams");
+        choiceBoxLang.addItem("Italiaans");
+        choiceBoxLang.addItem("Spaans");
 
 
         choiceBoxLang.addItemListener(e ->  {

@@ -74,6 +74,7 @@ public class mainPage implements allPagesInterface{
         textAttributes attrs = new textAttributes(text);
         text = attrs.alignToCenterTextPane();
 
+        text.setFont(new Font("Arial", Font.BOLD, 18));
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(getWidth.getX() / 1.5),this.height));
         text.setText(this.explainTxt);

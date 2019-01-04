@@ -84,6 +84,7 @@ public class piechart implements allPagesInterface {
       comboBox.addItem("show series that are similar");
       comboBox.addItem("show genre distribution");
       comboBox.addItem("show different letters in series");
+      comboBox.addItem("show language distribution");
 
       return comboBox;
     }
@@ -98,6 +99,7 @@ public class piechart implements allPagesInterface {
         textAttributes attrs = new textAttributes(text);
         text = attrs.alignToCenterTextPane();
 
+        text.setFont(new Font("Arial", Font.BOLD, 15));
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(width / 1.5),this.explainHeight));
         text.setText(this.explainText);

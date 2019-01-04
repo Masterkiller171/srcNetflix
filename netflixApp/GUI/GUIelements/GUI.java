@@ -154,7 +154,7 @@ public class GUI {
         //Choosing the layout for the center borderLayout which is based on the parameter input
         switch (lay){
             case MAIN:
-            page.setUpExplainText("\n\n" + this.infoText, 100);
+            page.setUpExplainText("\n" + this.infoText, 100);
             page.setUpdataShowText(this.listWithData, 190);
             page.setContainer(this.container);
             middlePanel = page.getCenterSector();

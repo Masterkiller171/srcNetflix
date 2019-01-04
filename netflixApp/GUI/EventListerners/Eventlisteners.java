@@ -55,7 +55,7 @@ public class Eventlisteners implements ActionListener {
     private void insertDataintoDb(){
         System.out.println("shoving that good shit into the database");
         if (!this.age.isEmpty() && !this.language.isEmpty() && !this.genre.isEmpty()){
-            data.uploadAccToDatabase(age,language,genre, serie, season);
+            data.uploadAccToDatabase(age,language,genre, serie, similar, season);
         }
     }
 
@@ -140,7 +140,7 @@ public class Eventlisteners implements ActionListener {
     }
 
     //--------------------------------------------------------------------------------------------------------------
-    //Rule for optimization: every method may only request data from database once
+    //Rule for optimization: every method may only request data from database once (done)
     private ArrayList<Integer> groupValue;
     private ArrayList<String> groupNames;
 
@@ -170,8 +170,13 @@ public class Eventlisteners implements ActionListener {
             break;
 
             case "show different letters in series":
-                this.infoText = "10 randomly chosen letters chosen from the alphabet are shown below and how many times they show up in all of the titles of all episodes in the database.";
+                this.infoText = "20 randomly chosen letters chosen from the alphabet are shown below and how many times they show up in all of the titles of all episodes in the database.";
                 createShowDifferentCharacters();
+            break;
+
+            case "show language distribution":
+                this.infoText = "Shows all distinct languages and the amount of people who choose that language.";
+                createShowLangDist();
             break;
         }
     }
@@ -211,18 +216,28 @@ public class Eventlisteners implements ActionListener {
 
         int sumFargo = 0;
         int sumBad = 0;
-        for (Object o : data.getLijktOp()) {
-            if (o.toString().equals("Fargo")){
-                sumFargo++;
-            }else if (o.toString().equals("Breaking Bad")){
-                sumBad++;
+        int nullSum = 0;
+
+        try {
+            for (Object o : data.getLijktOp()) {
+                if (o.toString().equals("Fargo")) {
+                    sumFargo++;
+                } else if (o.toString().equals("Breaking Bad")) {
+                    sumBad++;
+                } else if (o.toString().toUpperCase().equals("NULL")) {
+                    nullSum++;
+                }
             }
+        }catch (NullPointerException e){
+            e.getCause();
         }
 
         this.groupValue.add(sumFargo);
         this.groupValue.add(sumBad);
-        this.groupNames.add("Series lijken op Fargo: ");
-        this.groupNames.add("Series lijken op Breaking Bad: ");
+        this.groupValue.add(nullSum);
+        this.groupNames.add("Series similar to  Fargo: ");
+        this.groupNames.add("Series similar to Breaking Bad: ");
+        this.groupNames.add("Series similar to Nothing: ");
 
         actionComboxPIE(groupValue, groupNames);
     }
@@ -254,14 +269,29 @@ public class Eventlisteners implements ActionListener {
     private void createShowSeries(){
         this.groupValue = new ArrayList<>();
         this.groupNames  = new ArrayList<>();
-
-        this.groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawBreakingBad()));
-        this.groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawFargo()));
-        this.groupValue.add(stripObjectToInt(data.getCountOfIdsWhoSawSherlock()));
+        ArrayList<Object> datas = data.getCountOfIdsWhoSawSeries();
 
         this.groupNames.add("Breaking Bad");
         this.groupNames.add("Fargo");
         this.groupNames.add("Sherlock");
+
+        int sumBad = 0;
+        int sumFargo = 0;
+        int sumSher = 0;
+
+        for (Object o : datas) {
+            if (o.toString().equals(groupNames.get(0))){
+                sumBad++;
+            }else if (o.toString().equals(groupNames.get(1))){
+                sumFargo++;
+            }else if (o.toString().equals(groupNames.get(2))){
+                sumSher++;
+            }
+        }
+
+        this.groupValue.add(sumBad);
+        this.groupValue.add(sumFargo);
+        this.groupValue.add(sumSher);
 
         actionComboxPIE(groupValue, groupNames);
     }
@@ -277,7 +307,7 @@ public class Eventlisteners implements ActionListener {
 
         StringBuilder customCombo = new StringBuilder();
         Map<Character,Integer> datlet = new HashMap<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
              int rando = (int)(Math.random() * 25);
                  while (true) {
                      if (!customCombo.toString().contains(allChars.charAt(rando) + "")) {
@@ -307,16 +337,29 @@ public class Eventlisteners implements ActionListener {
         }
         actionComboxPIE(groupValue, groupNames);
     }
-    //--------------------------------------------
-    //Takes an object as parameter and converts it into an int
-    private int stripObjectToInt(Object obj){
-        String str = String.valueOf(obj);
-        str = str.replaceAll("\\[", "");
-        str = str.replaceAll("]","");
-        return Integer.parseInt(str);
+
+    private void createShowLangDist(){
+        this.groupValue = new ArrayList<>();
+        this.groupNames  = new ArrayList<>();
+        ArrayList<Object> datas = data.getAlllanguages();
+        Map<String, Integer> lanDat = new HashMap<>();
+
+        for (Object o : datas) {
+            if (!lanDat.containsKey(o.toString())){
+                lanDat.put(o.toString(), 1);
+                groupNames.add(o.toString());
+            }else{
+                lanDat.replace(o.toString(), (lanDat.get(o.toString()) + 1));
+            }
+        }
+
+        for (int i = 0; i < groupNames.size(); i++) {
+            groupValue.add(lanDat.get(groupNames.get(i)));
+        }
+
+        actionComboxPIE(groupValue, groupNames);
     }
-
-
+    //--------------------------------------------
     private void actionComboxPIE(ArrayList<Integer> data, ArrayList<String> groupNames){
         ui = new Interface();
         ui.setLayoutType(Layout.PIECHART);
@@ -329,6 +372,7 @@ public class Eventlisteners implements ActionListener {
     private String language;
     private String genre;
     private String serie;
+    private String similar;
     private int season;
 
     public void actionJcomboboxACCAge(ItemEvent e, Container container){
@@ -370,6 +414,15 @@ public class Eventlisteners implements ActionListener {
     //-----------------------------------------------
     public void actionJcomboboxACCSerie(ItemEvent e, Container container) {
         this.cont = container;
+        switch (String.valueOf(e.getItem())){
+            case "Sherlock":
+                similar = "Fargo";
+            break;
+
+            case "Fargo":
+                similar = "Breaking Bad";
+            break;
+        }
         this.serie = String.valueOf(e.getItem());
     }
 

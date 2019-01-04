@@ -68,6 +68,7 @@ public class removeAccount implements allPagesInterface {
         textAttributes attrs = new textAttributes(text);
         text = attrs.alignToCenterTextPane();
 
+        text.setFont(new Font("Arial", Font.BOLD, 18));
         text.setMargin(insets);
         text.setPreferredSize(new Dimension((int)(width / 1.5),this.explainTxtHeight));
         text.setText(this.explainText);

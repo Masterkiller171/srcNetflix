@@ -50,18 +50,8 @@ public class dataBaseData {
 
     //-----------------------------------------
     //Will return the count of the the ids who saw the serie sherlock
-    public ArrayList<Object> getCountOfIdsWhoSawSherlock(){
-        return getResultSetOfQuery("SELECT COUNT(Id) FROM seizoen" + " JOIN seizoen_serie ON seizoen_serie.SeizoenID = seizoen.seizoenId" + " JOIN serie ON seizoen_serie.SerieID = serie.serieID" + " WHERE serie.serie = 'Sherlock';");
-    }
-
-    //Will return the count of the the ids who saw the serie breaking bad
-    public ArrayList<Object> getCountOfIdsWhoSawBreakingBad(){
-        return getResultSetOfQuery("SELECT COUNT(Id) FROM seizoen" + " JOIN seizoen_serie ON seizoen_serie.SeizoenID = seizoen.seizoenId" + " JOIN serie ON seizoen_serie.SerieID = serie.serieID" + " WHERE serie.serie = 'Breaking bad';");
-    }
-
-    //Will return the count of the ids who saw the serie fargo
-    public ArrayList<Object> getCountOfIdsWhoSawFargo(){
-        return getResultSetOfQuery("SELECT COUNT(Id) FROM seizoen" + " JOIN seizoen_serie ON seizoen_serie.SeizoenID = seizoen.seizoenId" + " JOIN serie ON seizoen_serie.SerieID = serie.serieID" + " WHERE serie.serie = 'Fargo';");
+    public ArrayList<Object> getCountOfIdsWhoSawSeries(){
+        return getResultSetOfQuery("SELECT serie.serie FROM seizoen JOIN seizoen_serie ON seizoen_serie.SeizoenID = seizoen.seizoenId JOIN serie ON seizoen_serie.SerieID = serie.serieID;");
     }
 
     //-----------------------------------------
@@ -88,17 +78,25 @@ public class dataBaseData {
     public ArrayList<Object> getLettersFromSerie(){
         return getResultSetOfQuery("SELECT Titel FROM seizoen");
     }
-
     //-----------------------------------------
-    public void uploadAccToDatabase(String age, String language, String genre, String serie, int season){
+    public ArrayList<Object> getAlllanguages(){
+        return getResultSetOfQuery("SELECT Taal FROM (" + " SELECT Taal FROM persoon " + "UNION ALL" + " SELECT Taal FROM film ) taal;");
+    }
+    //-----------------------------------------
+    public void uploadAccToDatabase(String age, String language, String genre, String serie,String similar, int season){
         String str = String.valueOf(getResultSetOfQuery("SELECT MAX(Id) FROM persoon;"));
         str = str.replaceAll("\\[", "");
         str = str.replaceAll("]","");
 
         ArrayList<String> allDataSeason = getRandomAfleveringTitleAndTime(serie, season);
-            modifyDB("INSERT INTO persoon (Id, Leeftijd, Taal, Genre) VALUES('" + (Float.parseFloat(str) + 1) + "', '" + age + "', '" + language + "', '" + genre + "')");
+            modifyDB("INSERT INTO persoon (Id, Leeftijd, Taal, Genre, [lijkt een beetje op]) VALUES('" + (Float.parseFloat(str) + 1) + "', '" + age + "', '" + language + "', '" + genre + "', '" + similar + "')");
+
+            if (serie.contains("'")){
+                serie = serie.replaceAll("'", "");
+            }
+
             modifyDB("INSERT INTO seizoen (seizoenId, Id, Aflevering, Titel, Tijdsduur) VALUES('" + season + "', '" + (Float.parseFloat(str) + 1) + "', '" + allDataSeason.get(0) + "', '" + allDataSeason.get(1) + "', '" + allDataSeason.get(2) + "')");
-            System.out.println("Inserted " + age + " " + language + " " + genre + " " + serie + " " + season + " " + allDataSeason.get(0) + " " + allDataSeason.get(1) + " " + allDataSeason.get(2));
+            System.out.println("Inserted age: " + age + "\n Language: " + language + "\n Genre:  " + genre + "\n Serie:  " + serie + "\n Similar:  " + similar + "\n Season:  " + season + "\n Aflevering:  " + allDataSeason.get(0) + "\n Titel:  " + allDataSeason.get(1) + "\n Tijdsduur:  " + allDataSeason.get(2));
     }
 
     private ArrayList<String> getRandomAfleveringTitleAndTime(String serie, int season){
