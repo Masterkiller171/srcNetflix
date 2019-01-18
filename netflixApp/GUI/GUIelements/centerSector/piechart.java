@@ -173,7 +173,7 @@ public class piechart implements allPagesInterface {
     }
 
     //Generating a new colour for each chart 10 possibilities
-    private Color getColour(int pos){
+    public Color getColour(int pos){
         Color colour = null;
         switch (pos){
             case 0: colour = new Color(109, 255, 243); break;
